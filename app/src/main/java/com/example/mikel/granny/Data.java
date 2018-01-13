@@ -10,7 +10,7 @@ public class Data {
     private static Data _data;
 
     private String address;
-//    private String homeTime;
+    private LatLon homeLoc;
     private LatLon location;
     private int homeHour;
     private int homeMinute;
@@ -43,7 +43,16 @@ public class Data {
         getData().applicationController = ac;
         return _data;
     }
-
+    public void setAddress(String a){
+        this.address = a;
+    }
+    public void setHomeLoc(double lat, double lon){
+        homeLoc = new LatLon(lat, lon);
+    }
+    public void setHomeTime(int hour, int minute){
+        this.homeHour = hour;
+        this.homeMinute = minute;
+    }
     public void setPosition(LatLon loc){
         location = loc;
         applicationController.infoUpdated();
@@ -55,14 +64,9 @@ public class Data {
         applicationController.infoUpdated();
     }
 
-    public void setAddress(String a){
-        this.address = a;
-    }
 
-    public void setHomeTime(int hour, int minute){
-        this.homeHour = hour;
-        this.homeMinute = minute;
-    }
+
+
 
     public LatLon getLocation(){
         return location;

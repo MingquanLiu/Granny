@@ -24,11 +24,14 @@ public class InitInfoActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_init_info);
         final Button initialize = findViewById(R.id.initialize);
-        final EditText addressField = findViewById(R.id.addressField);
+//        final EditText addressField = findViewById(R.id.addressField);
+        final EditText homeLat = findViewById(R.id.homeLat);
+        final EditText homeLon = findViewById(R.id.homeLong);
         final TimePicker timePicker = findViewById(R.id.timePicker);
         initialize.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                data.setAddress(addressField.getText().toString());
+                data.setHomeLoc(Double.parseDouble(homeLat.getText().toString()), Double.parseDouble(homeLon.getText().toString()));
+//                data.setAddress(addressField.getText().toString());
                 data.setHomeTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                 Log.e("InitInfoActivity: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeHour() + ":" + data.getHomeMinute());
                 DataProvider dataProvider = new DataProvider(getApplicationContext());

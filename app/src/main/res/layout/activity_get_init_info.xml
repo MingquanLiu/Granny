@@ -7,20 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.mikel.granny.MainActivity">
 
-    <EditText
-        android:id="@+id/addressField"
-        android:layout_width="282dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="Where do you live? "
-        android:inputType="textPostalAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/initialize"
         android:layout_width="wrap_content"
@@ -56,11 +42,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="42dp"
         android:timePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressField" />
+        tools:layout_editor_absoluteY="126dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -68,12 +53,33 @@
         android:layout_height="33dp"
         android:layout_marginEnd="54dp"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="18dp"
         android:text="When should you be home? "
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressField" />
+        tools:layout_editor_absoluteY="102dp" />
+
+    <EditText
+        android:id="@+id/homeLong"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Home Longtitude"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/homeLat"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/homeLat"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Home Latitude"
+        android:inputType="numberDecimal"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="28dp" />
 
 </android.support.constraint.ConstraintLayout>
