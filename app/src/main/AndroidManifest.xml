@@ -47,6 +47,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Notif_batteryLow"></activity>
+        <activity android:name=".WhatsappAutoSelect"></activity>
         <service android:name=".ApplicationController" ></service>
     </application>
 
