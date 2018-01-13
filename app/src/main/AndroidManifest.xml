@@ -46,7 +46,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".Notif_batteryLow"></activity>
+=======
+        <service android:name=".ApplicationController" ></service>
+>>>>>>> 862c658dc97306e81aecaeb87190e3eb35a22616
     </application>
 
 </manifest>
