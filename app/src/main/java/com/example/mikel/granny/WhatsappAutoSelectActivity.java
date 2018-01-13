@@ -12,7 +12,7 @@ import android.widget.Toast;
  * Created by mikel on 2018/1/13.
  */
 
-public class WhatsappAutoSelect extends Activity {
+public class WhatsappAutoSelectActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // Get intent, action and MIME type
         super.onCreate(savedInstanceState);

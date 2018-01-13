@@ -31,7 +31,7 @@ public class ApplicationController extends Service {
     }
 
     public void makeNotif(){
-        Intent intent = new Intent(this, NotificationController.class);
+        Intent intent = new Intent(this, NotificationControl.class);
         intent.putExtra("title", "batteryLow");
         intent.putExtra("text", "Go home asap!");
         startActivity(intent);
