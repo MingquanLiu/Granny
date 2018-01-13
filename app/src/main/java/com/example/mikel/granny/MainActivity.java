@@ -42,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
 
-//                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelect.class);
+
+                VibrateController vibrateController = new VibrateController(getApplicationContext());
+                vibrateController.vibrateForInterval(2000);
+
+//                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelectActivity.class);
 //                intent.putExtra("task"," ");
 //                startActivity(intent);
 
