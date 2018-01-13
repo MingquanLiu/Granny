@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     final String tag = "Main Activity";
     //DataProvider dataProvider;
-    ApplicationController applicationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

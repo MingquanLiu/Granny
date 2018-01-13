@@ -15,11 +15,17 @@ public class ApplicationController extends Service {
     DataProvider dataProvider;
     Data currentInfo;
 
+
     @Override
     public void onCreate(){
         Log.e(tag,"AppController start");
-        currentInfo = new Data(this);
-        dataProvider = new DataProvider(getApplicationContext(), this.currentInfo);
+
+        Intent init_info_intent = new Intent(this, InitInfo.class);
+        init_info_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(init_info_intent);
+
+        currentInfo = Data.getData(this);
+        dataProvider = new DataProvider(getApplicationContext());
         dataProvider.createProviders();
         //TODO
         //if no record on database, initiate an activity to

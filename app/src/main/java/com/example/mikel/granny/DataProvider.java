@@ -29,11 +29,13 @@ public class DataProvider {
     private Context context;
     private UQI uqi;
     private Data currentInfo;
-    public DataProvider(Context context, Data currentInfo){
+
+
+    public DataProvider(Context context){
         this.context = context;
         this.context = context;
         uqi = new UQI(context);
-        this.currentInfo = currentInfo;
+        this.currentInfo = Data.getData();
     }
 
     public void createProviders(){

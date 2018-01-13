@@ -48,6 +48,7 @@
         </activity>
         <activity android:name=".Notif_batteryLow"></activity>
         <service android:name=".ApplicationController" ></service>
+        <activity android:name="InitInfo"></activity>
     </application>
 
 </manifest>

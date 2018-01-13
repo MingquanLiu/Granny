@@ -7,16 +7,36 @@ import io.github.privacystreams.location.LatLon;
  */
 
 public class Data {
+    private static Data _data;
+    private String address;
+    private String homeTime;
     private LatLon location;
     private Double loudness;
 //    private double battery;
 //    private double wifiInfo;
     private ApplicationController applicationController;
 
-    public Data(ApplicationController ac){
-        this.applicationController = ac;
+    private Data(){
         this.location = null;
         this.loudness = 0.0;
+    }
+//
+//    public Data(ApplicationController ac){
+//        this.applicationController = ac;
+//        this.location = null;
+//        this.loudness = 0.0;
+//    }
+
+    public static Data getData(){
+        if(_data == null){
+            _data = new Data();
+        }
+        return _data;
+    }
+
+    public static Data getData(ApplicationController ac){
+        getData().applicationController = ac;
+        return _data;
     }
 
     public void setPosition(LatLon loc){
@@ -30,11 +50,27 @@ public class Data {
         applicationController.infoUpdated();
     }
 
+    public void setAddress(String a){
+        this.address = a;
+    }
+
+    public void setHomeTime(String time){
+        this.homeTime = time;
+    }
+
     public LatLon getLocation(){
         return location;
     }
 
     public Double getLoudness(){
         return loudness;
+    }
+
+    public String getAddress(){
+        return address;
+    }
+
+    public String getHomeTime(){
+        return homeTime;
     }
 }
