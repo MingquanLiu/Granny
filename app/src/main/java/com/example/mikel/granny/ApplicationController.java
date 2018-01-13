@@ -16,11 +16,17 @@ public class ApplicationController extends Service {
     Data currentInfo;
     //NotificationController NotifController;
 
+
     @Override
     public void onCreate(){
         Log.e(tag,"AppController start");
-        currentInfo = new Data();
-        dataProvider = new DataProvider(getApplicationContext(), this.currentInfo);
+
+        Intent init_info_intent = new Intent(this, InitInfo.class);
+        init_info_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(init_info_intent);
+
+        currentInfo = Data.getData(this);
+        dataProvider = new DataProvider(getApplicationContext());
         dataProvider.createProviders();
 
 

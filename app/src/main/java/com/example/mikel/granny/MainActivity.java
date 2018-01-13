@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     final String tag = "Main Activity";
     //DataProvider dataProvider;
-    ApplicationController applicationController;
+
     final String number = "4129446375";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-//                startService(new Intent(MainActivity.this, ApplicationController.class));
+                startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
                 VibrateController vibrateController = new VibrateController(getApplicationContext());
                 vibrateController.vibrateForInterval(2000);
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelectActivity.class);
 //                intent.putExtra("task"," ");
 //                startActivity(intent);
-
 
 //                Log.e(tag,"I am here");
                 //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
