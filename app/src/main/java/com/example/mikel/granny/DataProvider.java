@@ -38,11 +38,11 @@ public class DataProvider {
 
     public void createProviders(){
         Log.e("Device State",deviceStatusMask+"");
-//        getCurrentLocation();
-//        testLocation();cc
+        getCurrentLocation();
+//        testLocation();
 //        testCurrentLocation();
-        getLoudnessPeriodically();
-        getDeviceStatePeriodically();
+//        getLoudnessPeriodically();
+//        getDeviceStatePeriodically();
     }
     /**
      * Get the current location.
@@ -51,16 +51,24 @@ public class DataProvider {
      */
     public void getCurrentLocation() {
 //        try {
-            Globals.LocationConfig.useGoogleService = true;
 //            LatLon latLon = new UQI(context)
 //                    .getData(Geolocation.asCurrent(Geolocation.LEVEL_CITY), Purpose.UTILITY("check weather"))
 //                    .getFirst(Geolocation.LAT_LON);
             // Do something with geolocation
 //            Log.d("Location", "" + latLon.getLatitude() + ", " + latLon.getLongitude());
 
-            new UQI(context).getData(Geolocation.asUpdates(10, Geolocation.LEVEL_CITY), Purpose.TEST("test"))
-                    .setField("distorted_lat_lon", GeolocationOperators.distort(Geolocation.LAT_LON, 10))
-                    .debug();
+        Globals.LocationConfig.useGoogleService = true;
+         uqi.getData(Geolocation.asUpdates(1000, Geolocation.LEVEL_EXACT), Purpose.TEST("test"))
+                 .forEach(new Callback<Item>() {
+                     @Override
+                     protected void onInput(Item input) {
+                         LatLon latLon = input.getValueByField(Geolocation.LAT_LON);
+                         Float speed = input.getValueByField(Geolocation.SPEED);
+                         Float bearing = input.getValueByField(Geolocation.BEARING);
+                         Log.e("Geolocation","LatLon:"+latLon.toString()+" Speed:"+speed+
+                                 " Bearing:"+bearing);
+                     }
+                 });
 //
 //        } catch (PSException e) {
 //            e.printStackTrace();
@@ -104,8 +112,8 @@ public class DataProvider {
 
     public void testLocation() {
         Globals.LocationConfig.useGoogleService = true;
-        PStream locationStream = uqi.getData(Geolocation.asUpdates(1, Geolocation.LEVEL_EXACT), Purpose.TEST("test"))
-                .setField("distorted_lat_lon", GeolocationOperators.distort(Geolocation.LAT_LON, 1000))
+        PStream locationStream = uqi.getData(Geolocation.asUpdates(1000, Geolocation.LEVEL_EXACT), Purpose.TEST("test"))
+                .setField("distorted_lat_lon", GeolocationOperators.distort(Geolocation.LAT_LON, 10))
                 .setField("distortion", GeolocationOperators.distanceBetween(Geolocation.LAT_LON, "distorted_lat_lon"))
                 .reuse(2);
 
@@ -117,12 +125,12 @@ public class DataProvider {
             }
         });
 
-        try {
-            Thread.sleep(10);
-            uqi.stopAll();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(10);
+//            uqi.stopAll();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
