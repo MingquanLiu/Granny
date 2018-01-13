@@ -8,13 +8,16 @@ import io.github.privacystreams.location.LatLon;
 
 public class Data {
     private static Data _data;
+
     private String address;
     private String homeTime;
     private LatLon location;
     private Double loudness;
-//    private double battery;
-//    private double wifiInfo;
     private ApplicationController applicationController;
+    private String WIFIName;
+    private Boolean isConnected;
+    private float batteryLevel;
+    private Boolean isScreenOn;
 
     private Data(){
         this.location = null;
@@ -72,5 +75,12 @@ public class Data {
 
     public String getHomeTime(){
         return homeTime;
+    }
+
+    public void setDeviceState(String wifi, Boolean isconnected, float battery, Boolean screen){
+        WIFIName = wifi;
+        isConnected = isconnected;
+        batteryLevel = battery;
+        isScreenOn = screen;
     }
 }

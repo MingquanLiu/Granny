@@ -46,9 +46,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Notif_batteryLow"></activity>
         <service android:name=".ApplicationController" ></service>
-        <activity android:name="InitInfo"></activity>
+        <activity android:name="InitInfo"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".WhatsappAutoSelect" />
+
+        <service android:name=".ApplicationController" />
+
+        <activity android:name=".NotificationControl"></activity>
     </application>
 
 </manifest>

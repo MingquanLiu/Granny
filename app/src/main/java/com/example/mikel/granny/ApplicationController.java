@@ -14,6 +14,7 @@ public class ApplicationController extends Service {
     final String tag = "AppController";
     DataProvider dataProvider;
     Data currentInfo;
+    //NotificationController NotifController;
 
 
     @Override
@@ -27,10 +28,19 @@ public class ApplicationController extends Service {
         currentInfo = Data.getData(this);
         dataProvider = new DataProvider(getApplicationContext());
         dataProvider.createProviders();
+
+
         //TODO
         //if no record on database, initiate an activity to
         //ask user input for address
         //ask user input for expected time to arrive home
+    }
+
+    public void makeNotif(){
+        Intent intent = new Intent(this, NotificationControl.class);
+        intent.putExtra("title", "batteryLow");
+        intent.putExtra("text", "Go home asap!");
+        startActivity(intent);
     }
 
     @Override
