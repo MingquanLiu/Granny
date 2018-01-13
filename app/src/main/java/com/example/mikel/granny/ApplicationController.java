@@ -20,7 +20,7 @@ public class ApplicationController extends Service {
     @Override
     public void onCreate(){
         Log.e(tag,"AppController start");
-        Intent init_info_intent = new Intent(this, InitInfo.class);
+        Intent init_info_intent = new Intent(this, InitInfoActivity.class);
         init_info_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(init_info_intent);
         currentInfo = Data.getData(this);

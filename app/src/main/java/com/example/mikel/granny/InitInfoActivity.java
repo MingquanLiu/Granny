@@ -1,18 +1,18 @@
 package com.example.mikel.granny;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.support.v4.app.FragmentActivity;
+import android.widget.TimePicker;
 
 /**
  * Created by Lingrui on 1/13/2018.
  */
 
-public class InitInfo extends Activity {
+public class InitInfoActivity extends FragmentActivity {
 
     private Data data;
 
@@ -25,15 +25,15 @@ public class InitInfo extends Activity {
         setContentView(R.layout.activity_get_init_info);
         final Button initialize = findViewById(R.id.initialize);
         final EditText addressField = findViewById(R.id.addressField);
-        final EditText timeField = findViewById(R.id.timeField);
+        final TimePicker timePicker = findViewById(R.id.timePicker);
         initialize.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 data.setAddress(addressField.getText().toString());
-                data.setHomeTime(timeField.getText().toString());
-                Log.e("InitInfo: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeTime());
+                data.setHomeTime(timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                Log.e("InitInfoActivity: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeHour() + ":" + data.getHomeMinute());
                 DataProvider dataProvider = new DataProvider(getApplicationContext());
                 dataProvider.createProviders();
-                if (!data.getAddress().equals("") && !data.getHomeTime().equals("")){
+                if (!data.getAddress().equals("") && (data.getHomeHour() != 0 || data.getHomeMinute() != 0)){
                     finish();
                 }
             }
@@ -41,9 +41,9 @@ public class InitInfo extends Activity {
 
     }
 //
-//    @Override
-//    public void onDestroyed(){
-//
+//    public void showTimePickerDialog(View v) {
+//        DialogFragment newFragment = new TimePickerFragment();
+//        newFragment.show(this.getSupportFragmentManager(), "timePicker");
 //    }
 
 }

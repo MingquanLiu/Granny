@@ -10,8 +10,10 @@ public class Data {
     private static Data _data;
 
     private String address;
-    private String homeTime;
+//    private String homeTime;
     private LatLon location;
+    private int homeHour;
+    private int homeMinute;
     private Double loudness;
     private ApplicationController applicationController;
     private String WIFIName;
@@ -57,8 +59,9 @@ public class Data {
         this.address = a;
     }
 
-    public void setHomeTime(String time){
-        this.homeTime = time;
+    public void setHomeTime(int hour, int minute){
+        this.homeHour = hour;
+        this.homeMinute = minute;
     }
 
     public LatLon getLocation(){
@@ -73,8 +76,12 @@ public class Data {
         return address;
     }
 
-    public String getHomeTime(){
-        return homeTime;
+    public int getHomeHour(){
+        return homeHour;
+    }
+
+    public int getHomeMinute(){
+        return homeMinute;
     }
 
     public void setDeviceState(String wifi, Boolean isconnected, float battery, Boolean screen){

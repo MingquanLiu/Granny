@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, NotificationControl.class));
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
+
+
                 VibrateController vibrateController = new VibrateController(getApplicationContext());
                 vibrateController.vibrateForInterval(2000);
 

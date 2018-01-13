@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timeDisplay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mikel.granny.MainActivity">
@@ -12,7 +13,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:hint="Where do you live? "
         android:inputType="textPostalAddress"
@@ -20,30 +21,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/timeField"
-        android:layout_width="272dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="37dp"
-        android:ems="10"
-        android:hint="When should you get home? "
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressField" />
-
     <Button
         android:id="@+id/initialize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="233dp"
         android:layout_marginEnd="66dp"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="160dp"
         android:text="Initialize your virtual granny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="303dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="189dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeField" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="42dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressField" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="276dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="18dp"
+        android:text="When should you be home? "
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressField" />
 
 </android.support.constraint.ConstraintLayout>
