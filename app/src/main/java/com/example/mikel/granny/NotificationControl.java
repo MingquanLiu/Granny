@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class NotificationControl extends AppCompatActivity {
+public class NotificationControl{
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     @Override
@@ -17,7 +17,7 @@ public class NotificationControl extends AppCompatActivity {
         Intent intent = getIntent();
         String title= intent.getStringExtra("title");
         String context = intent.getStringExtra("text");
-        Notification noti = new Notification.Builder(getApplicationContext()).setContentText(context).setContentTitle(title).setSmallIcon(R.drawable.ic_launcher_foreground).build();
+        Notification noti = new Notification.Builder(NotificationControl.this).setContentText("hello").setContentTitle("hellotoo").setSmallIcon(R.drawable.ic_launcher_background).build();
         NM.notify(0, noti);
     }
 }

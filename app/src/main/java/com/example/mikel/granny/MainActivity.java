@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-
+                startActivity(new Intent(MainActivity.this, NotificationControl.class));
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
                 VibrateController vibrateController = new VibrateController(getApplicationContext());
