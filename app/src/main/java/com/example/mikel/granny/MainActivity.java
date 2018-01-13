@@ -14,6 +14,8 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import io.github.privacystreams.audio.Audio;
 import io.github.privacystreams.audio.AudioOperators;
 import io.github.privacystreams.core.Callback;
@@ -43,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
 //                openWhatsappContact1(number);
                 VibrateController vibrateController = new VibrateController(getApplicationContext());
                 vibrateController.vibrateForInterval(2000);
+
+                WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
+                try {
+                    wallpaperController.changeWallPaper();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 //                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelectActivity.class);
 //                intent.putExtra("task"," ");
