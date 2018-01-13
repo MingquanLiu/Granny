@@ -41,8 +41,8 @@ public class DataProvider {
         getCurrentLocation();
 //        testLocation();
 //        testCurrentLocation();
-//        getLoudnessPeriodically();
-//        getDeviceStatePeriodically();
+        getLoudnessPeriodically();
+        getDeviceStatePeriodically();
     }
     /**
      * Get the current location.

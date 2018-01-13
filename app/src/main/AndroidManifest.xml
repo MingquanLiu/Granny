@@ -48,10 +48,14 @@
         </activity>
 
         <service android:name=".ApplicationController" />
-        <service
+        <activity
             android:name=".NotificationController"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"></activity>
+
+        <activity android:name=".WhatsappAutoSelect"></activity>
+        <service android:name=".ApplicationController" ></service>
+
     </application>
 
 </manifest>
