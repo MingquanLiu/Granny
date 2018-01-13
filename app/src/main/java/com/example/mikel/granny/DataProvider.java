@@ -6,6 +6,7 @@ import android.util.Log;
 import io.github.privacystreams.audio.Audio;
 import io.github.privacystreams.audio.AudioOperators;
 import io.github.privacystreams.core.Callback;
+import io.github.privacystreams.core.Item;
 import io.github.privacystreams.core.UQI;
 import io.github.privacystreams.core.exceptions.PSException;
 import io.github.privacystreams.core.purposes.Purpose;
@@ -19,14 +20,16 @@ import io.github.privacystreams.location.LatLon;
 
 public class DataProvider {
     private static final long DURATION = 10 * 1000; // 10 seconds
-    private static final long INTERVAL = 10 * 60 * 1000; // 10 minutes
-    Context context;
+    private static final long INTERVAL = 2 * 60 * 1000; // 2 minutes
+    private static int deviceStatusMask = 0x1101;
+    private Context context;
     public DataProvider(Context context){
-        context = context;
+        this.context = context;
     }
 
     public void createProviders(){
         getLoudnessPeriodically();
+        getDeviceState();
     }
     /**
      * Get the current location.
@@ -63,8 +66,14 @@ public class DataProvider {
                 });
     }
 
-//    public void getDeviceState(){
-//        new UQI(context)
-//                .getData(DeviceState.asUpdates())
-//    }
+    public void getDeviceState(){
+        new UQI(context)
+                .getData(DeviceState.asUpdates(INTERVAL,deviceStatusMask),Purpose.UTILITY("monitor battery and wifi")).debug();
+//                .forEach(new Callback<Item>() {
+//                    @Override
+//                    protected void onInput(Item input) {
+//
+//                    }
+//                });
+    }
 }
