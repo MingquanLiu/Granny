@@ -20,14 +20,10 @@ public class ApplicationController extends Service {
     @Override
     public void onCreate(){
         Log.e(tag,"AppController start");
-
         Intent init_info_intent = new Intent(this, InitInfoActivity.class);
         init_info_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(init_info_intent);
-
         currentInfo = Data.getData(this);
-
-
 
         //TODO
         //if no record on database, initiate an activity to
@@ -56,7 +52,6 @@ public class ApplicationController extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
         return null;
     }
 }
