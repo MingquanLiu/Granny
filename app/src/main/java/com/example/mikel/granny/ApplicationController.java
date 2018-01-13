@@ -18,7 +18,7 @@ public class ApplicationController extends Service {
     @Override
     public void onCreate(){
         Log.e(tag,"AppController start");
-        currentInfo = new Data();
+        currentInfo = new Data(this);
         dataProvider = new DataProvider(getApplicationContext(), this.currentInfo);
         dataProvider.createProviders();
         //TODO

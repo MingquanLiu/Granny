@@ -7,19 +7,34 @@ import io.github.privacystreams.location.LatLon;
  */
 
 public class Data {
-    private LatLon Location;
-    private Double Loudness;
+    private LatLon location;
+    private Double loudness;
+//    private double battery;
+//    private double wifiInfo;
+    private ApplicationController applicationController;
 
-    public Data(){
-        this.Location = null;
-        this.Loudness = 0.0;
+    public Data(ApplicationController ac){
+        this.applicationController = ac;
+        this.location = null;
+        this.loudness = 0.0;
     }
 
     public void setPosition(LatLon loc){
-        Location = loc;
-
+        location = loc;
+        applicationController.infoUpdated();
     }
+
+
     public void setLoudness(Double loudness){
-        Loudness = loudness;
+        this.loudness = loudness;
+        applicationController.infoUpdated();
+    }
+
+    public LatLon getLocation(){
+        return location;
+    }
+
+    public Double getLoudness(){
+        return loudness;
     }
 }
