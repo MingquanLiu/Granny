@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.support.v4.app.NotificationCompat;
+import android.app.NotificationManager;
 
 import io.github.privacystreams.audio.Audio;
 import io.github.privacystreams.audio.AudioOperators;
@@ -20,8 +22,9 @@ import io.github.privacystreams.location.LatLon;
 public class MainActivity extends AppCompatActivity {
 
     final String tag = "Main Activity";
-    DataProvider dataProvider;
+    //DataProvider dataProvider;
     ApplicationController applicationController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +33,17 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-//                startService(new Intent(MainActivity.this, ApplicationController.class));
-                Log.e(tag,"I am here");
-                dataProvider=new DataProvider(getApplicationContext());
-                dataProvider.createProviders();
+                startService(new Intent(MainActivity.this, ApplicationController.class));
+//                Log.e(tag,"I am here");
+                //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
+                //dataProvider.createProviders();
             }
         });
 
 
 
     }
+
 
 
 }

@@ -24,13 +24,16 @@ import io.github.privacystreams.utils.Globals;
 public class DataProvider {
     private static final long DURATION = 10 * 1000; // 10 seconds
     private static final long INTERVAL = 2 * 60 * 1000; // 2 minutes
+
     private static int deviceStatusMask = 1+2+4+8+16;
     private Context context;
     private UQI uqi;
-
-    public DataProvider(Context context){
+    private Data currentInfo;
+    public DataProvider(Context context, Data currentInfo){
+        this.context = context;
         this.context = context;
         uqi = new UQI(context);
+        this.currentInfo = currentInfo;
     }
 
     public void createProviders(){
@@ -77,6 +80,7 @@ public class DataProvider {
                     @Override
                     protected void onInput(Double loudness) {
                         // Do something with the loudness value.
+                        currentInfo.setLoudness(loudness);
                         Log.d("Loudness", "" + loudness + " dB.");
                     }
                 });
