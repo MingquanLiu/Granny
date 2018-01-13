@@ -18,16 +18,24 @@ public class ApplicationController extends Service {
     @Override
     public void onCreate(){
         Log.e(tag,"AppController start");
+        currentInfo = new Data();
+        dataProvider = new DataProvider(getApplicationContext(), this.currentInfo);
+        dataProvider.createProviders();
         //TODO
         //if no record on database, initiate an activity to
         //ask user input for address
         //ask user input for expected time to arrive home
-        //proceed to monitor user location using cell tower
     }
 
     @Override
     public void onDestroy(){
 
+    }
+
+
+    public void infoUpdated(){
+        //TODO
+        //check Data
     }
 
     @Nullable

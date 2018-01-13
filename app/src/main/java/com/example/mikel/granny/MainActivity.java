@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-//                startService(new Intent(MainActivity.this, ApplicationController.class));
-                Log.e(tag,"I am here");
+                startService(new Intent(MainActivity.this, ApplicationController.class));
+//                Log.e(tag,"I am here");
                 //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
                 //dataProvider.createProviders();
             }
