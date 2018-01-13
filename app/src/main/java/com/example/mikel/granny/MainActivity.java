@@ -44,29 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-    mBuilder.setSmallIcon(R.drawable.ic_launcher_foreground);
-            .setContentTitle("HW")
-            .setContentText("Hello World!");
-    //Intent resultIntent = new Intent(this, this);
-
-    // Because clicking the notification opens a new ("special") activity, there's
-    // no need to create an artificial back stack.
-    /*PendingIntent resultPendingIntent =
-            PendingIntent.getActivity(
-                    this,
-                    0,
-                    resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-            );*/
-    // Sets an ID for the notification
-
-    int mNotificationId = 001;
-    // Gets an instance of the NotificationManager service
-    NotificationManager mNotifyMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    // Builds the notification and issues it.
-    mNotifyMgr.notify(mNotificationId, mBuilder.build());
-
 
 
 }
