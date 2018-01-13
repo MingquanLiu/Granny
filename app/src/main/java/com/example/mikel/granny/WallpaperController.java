@@ -1,5 +1,6 @@
 package com.example.mikel.granny;
 
+import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.net.Uri;
@@ -17,6 +18,7 @@ public class WallpaperController {
         this.context = context;
     }
 
+    @SuppressLint("ResourceType")
     public void changeWallPaper() throws IOException {
         WallpaperManager wpm = WallpaperManager.getInstance(context);
         Uri uri = Uri.parse("android.resource://com.example.mikel.granny/drawable/wp");
