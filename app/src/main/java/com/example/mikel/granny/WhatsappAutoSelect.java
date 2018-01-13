@@ -41,6 +41,7 @@ public class WhatsappAutoSelect extends Activity {
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
             this.startActivity(Intent.createChooser(waIntent, "Share with"));
+            this.finish();
 
         } catch (PackageManager.NameNotFoundException e) {
             Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
@@ -49,29 +50,6 @@ public class WhatsappAutoSelect extends Activity {
 
     }
 
-    void openWhatsappContact(String number) {
-        PackageManager pm=this.getPackageManager();
-        try {
-            Uri uri = Uri.parse("smsto:" + number);
-
-            Intent waIntent = new Intent(Intent.ACTION_SENDTO, uri);
-            waIntent.setType("text/plain");
-            String text = "YOUR TEXT HERE";
-
-            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-            //Check if package exists or not. If not then code
-            //in catch block will be called
-            waIntent.setPackage("com.whatsapp");
-
-            waIntent.putExtra(Intent.EXTRA_TEXT, text);
-            this.startActivity(Intent.createChooser(waIntent, "Share with"));
-
-        } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                    .show();
-        }
-
-    }
 
     public void openWhatsappContact1(String number) {
         Uri uri = Uri.parse("smsto:" + number);
@@ -82,5 +60,8 @@ public class WhatsappAutoSelect extends Activity {
         i.putExtra(Intent.EXTRA_TEXT, text);
         i.setPackage("com.whatsapp");
         this.startActivity(Intent.createChooser(i, ""));
+        this.finish();
     }
+
+
 }
