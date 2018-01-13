@@ -26,8 +26,7 @@ public class ApplicationController extends Service {
         startActivity(init_info_intent);
 
         currentInfo = Data.getData(this);
-        dataProvider = new DataProvider(getApplicationContext());
-        dataProvider.createProviders();
+
 
 
         //TODO

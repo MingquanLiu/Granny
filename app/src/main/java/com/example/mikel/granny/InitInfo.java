@@ -31,6 +31,8 @@ public class InitInfo extends Activity {
                 data.setAddress(addressField.getText().toString());
                 data.setHomeTime(timeField.getText().toString());
                 Log.e("InitInfo: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeTime());
+                DataProvider dataProvider = new DataProvider(getApplicationContext());
+                dataProvider.createProviders();
                 if (!data.getAddress().equals("") && !data.getHomeTime().equals("")){
                     finish();
                 }

@@ -19,6 +19,5 @@ public class NotificationControl extends AppCompatActivity {
         String context = intent.getStringExtra("text");
         Notification noti = new Notification.Builder(getApplicationContext()).setContentText(context).setContentTitle(title).setSmallIcon(R.drawable.ic_launcher_foreground).build();
         NM.notify(0, noti);
-
     }
 }
