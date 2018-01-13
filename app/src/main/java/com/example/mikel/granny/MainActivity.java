@@ -1,6 +1,7 @@
 package com.example.mikel.granny;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     final String tag = "Main Activity";
     DataProvider dataProvider;
+    ApplicationController applicationController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Log.e(tag,"I am here");
-                dataProvider=new DataProvider(getApplicationContext());
-                dataProvider.createProviders();
+                startService(new Intent(MainActivity.this, ApplicationController.class));
+//                Log.e(tag,"I am here");
+//                dataProvider=new DataProvider(getApplicationContext());
+//                dataProvider.createProviders();
             }
         });
 
