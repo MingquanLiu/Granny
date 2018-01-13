@@ -12,7 +12,7 @@ import android.widget.EditText;
  * Created by Lingrui on 1/13/2018.
  */
 
-public class InitInfo extends Activity {
+public class InitInfoActivity extends Activity {
 
     private Data data;
 
@@ -30,7 +30,7 @@ public class InitInfo extends Activity {
             public void onClick(View v) {
                 data.setAddress(addressField.getText().toString());
                 data.setHomeTime(timeField.getText().toString());
-                Log.e("InitInfo: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeTime());
+                Log.e("InitInfoActivity: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeTime());
                 if (!data.getAddress().equals("") && !data.getHomeTime().equals("")){
                     finish();
                 }
