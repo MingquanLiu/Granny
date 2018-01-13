@@ -9,6 +9,10 @@ import io.github.privacystreams.location.LatLon;
 public class Data {
     private LatLon Location;
     private Double Loudness;
+    private String WIFIName;
+    private Boolean isConnected;
+    private float batteryLevel;
+    private Boolean isScreenOn;
 
     public Data(){
         this.Location = null;
@@ -19,7 +23,15 @@ public class Data {
         Location = loc;
 
     }
+
     public void setLoudness(Double loudness){
         Loudness = loudness;
+    }
+
+    public void setDeviceState(String wifi, Boolean isconnected, float battery, Boolean screen){
+        WIFIName = wifi;
+        isConnected = isconnected;
+        batteryLevel = battery;
+        isScreenOn = screen;
     }
 }

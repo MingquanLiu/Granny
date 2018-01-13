@@ -106,6 +106,7 @@ public class DataProvider {
                         Boolean isScreenOn = input.getValueByField(DeviceState.IS_SCREEN_ON);
                         Log.e("DeviceState","Wifi app List:"+input.getValueByField(DeviceState.WIFI_AP_LIST)+
                                 " Battery Info:"+input.getValueByField(DeviceState.BATTERY_LEVEL));
+                        currentInfo.setDeviceState(wifiName, isConnected, batteryLevel, isScreenOn);
                     }
                 });
     }

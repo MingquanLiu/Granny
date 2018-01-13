@@ -46,8 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Notif_batteryLow"></activity>
-        <service android:name=".ApplicationController" ></service>
+
+        <service android:name=".ApplicationController" />
+        <service
+            android:name=".NotificationController"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
