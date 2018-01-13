@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.support.v4.app.NotificationCompat;
 
 import io.github.privacystreams.audio.Audio;
 import io.github.privacystreams.audio.AudioOperators;
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentTitle("HW")
+                    .setContentText("Hello World!");
 
 
 }

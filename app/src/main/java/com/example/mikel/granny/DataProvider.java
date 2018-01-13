@@ -20,13 +20,17 @@ import io.github.privacystreams.location.LatLon;
 public class DataProvider {
     private static final long DURATION = 10 * 1000; // 10 seconds
     private static final long INTERVAL = 10 * 60 * 1000; // 10 minutes
+    private Data currentInfo;
+
     Context context;
-    public DataProvider(Context context){
+    public DataProvider(Context context, Data currentInfo){
         context = context;
+        this.currentInfo = currentInfo;
     }
 
     public void createProviders(){
         getLoudnessPeriodically();
+
     }
     /**
      * Get the current location.
@@ -39,6 +43,7 @@ public class DataProvider {
                     .getData(Geolocation.asCurrent(Geolocation.LEVEL_CITY), Purpose.UTILITY("check weather"))
                     .getFirst(Geolocation.LAT_LON);
             // Do something with geolocation
+            currentInfo.setPosition(latLon);
             Log.d("Location", "" + latLon.getLatitude() + ", " + latLon.getLongitude());
         } catch (PSException e) {
             e.printStackTrace();
@@ -58,6 +63,7 @@ public class DataProvider {
                     @Override
                     protected void onInput(Double loudness) {
                         // Do something with the loudness value.
+                        currentInfo.setLoudness(loudness);
                         Log.d("Loudness", "" + loudness + " dB.");
                     }
                 });
