@@ -21,15 +21,16 @@ import io.github.privacystreams.location.LatLon;
 public class DataProvider {
     private static final long DURATION = 10 * 1000; // 10 seconds
     private static final long INTERVAL = 2 * 60 * 1000; // 2 minutes
-    private static int deviceStatusMask = 0x1101;
+    private static int deviceStatusMask = 1+2+4+8+16;
     private Context context;
     public DataProvider(Context context){
         this.context = context;
     }
 
     public void createProviders(){
+        Log.e("Device State",deviceStatusMask+"");
         getLoudnessPeriodically();
-        getDeviceState();
+        getDeviceStatePeriodically();
     }
     /**
      * Get the current location.
@@ -66,14 +67,19 @@ public class DataProvider {
                 });
     }
 
-    public void getDeviceState(){
+    public void getDeviceStatePeriodically(){
         new UQI(context)
-                .getData(DeviceState.asUpdates(INTERVAL,deviceStatusMask),Purpose.UTILITY("monitor battery and wifi")).debug();
-//                .forEach(new Callback<Item>() {
-//                    @Override
-//                    protected void onInput(Item input) {
-//
-//                    }
-//                });
+                .getData(DeviceState.asUpdates(INTERVAL,deviceStatusMask),Purpose.UTILITY("monitor battery and wifi"))
+                .forEach(new Callback<Item>() {
+                    @Override
+                    protected void onInput(Item input) {
+                        String wifiName = input.getValueByField(DeviceState.WIFI_BSSID);
+                        Boolean isConnected = input.getValueByField(DeviceState.IS_CONNECTED);
+                        Double batteryLevel = input.getValueByField(DeviceState.BATTERY_LEVEL);
+                        Boolean isScreenOn = input.getValueByField(DeviceState.IS_SCREEN_ON);
+                        Log.e("DeviceState","Wifi app List:"+input.getValueByField(DeviceState.WIFI_AP_LIST)+
+                                " Battery Info:"+input.getValueByField(DeviceState.BATTERY_LEVEL));
+                    }
+                });
     }
 }
