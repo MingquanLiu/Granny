@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     //DataProvider dataProvider;
 
     final String number = "4129446375";
+    int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
 //                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelectActivity.class);
 //                intent.putExtra("task"," ");
 //                startActivity(intent);
@@ -66,5 +69,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void sendNotification() {
 
+        //Get an instance of NotificationManager//
+        count++;
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_action_name)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!"+ count).setPriority(Notification.VISIBILITY_PUBLIC);
+
+
+        // Gets an instance of the NotificationManager service//
+
+        NotificationManager mNotificationManager =
+
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Log.e("Notification","In Notification");
+        // When you issue multiple notifications about the same type of event,
+        // it’s best practice for your app to try to update an existing notification
+        // with this new information, rather than immediately creating a new notification.
+        // If you want to update this notification at a later date, you need to assign it an ID.
+        // You can then use this ID whenever you issue a subsequent notification.
+        // If the previous notification is still visible, the system will update this existing notification,
+        // rather than create a new one. In this example, the notification’s ID is 001//
+
+        mNotificationManager.notify(001, mBuilder.build());
+    }
 }
+
+

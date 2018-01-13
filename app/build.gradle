@@ -27,4 +27,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'io.github.privacystreams:privacystreams-android-sdk:0.1.7'
     compile 'com.google.android.gms:play-services-location:10.2.1'
+    compile "com.android.support:support-v4:24.1.1"
+
 }
