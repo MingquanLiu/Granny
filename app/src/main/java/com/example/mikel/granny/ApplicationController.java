@@ -12,6 +12,8 @@ import android.util.Log;
 
 public class ApplicationController extends Service {
     final String tag = "AppController";
+    DataProvider dataProvider;
+    Data currentInfo;
 
     @Override
     public void onCreate(){

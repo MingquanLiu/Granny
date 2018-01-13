@@ -10,9 +10,9 @@ public class Data {
     private LatLon Location;
     private Double Loudness;
 
-    public Data(LatLon loc = null, Double loudness = 0.0){
-        this.Location = loc;
-        this.Loudness = loudness;
+    public Data(){
+        this.Location = null;
+        this.Loudness = 0.0;
     }
 
     public void setPosition(LatLon loc){

@@ -22,8 +22,10 @@ public class DataProvider {
     private static final long DURATION = 10 * 1000; // 10 seconds
     private static final long INTERVAL = 2 * 60 * 1000; // 2 minutes
     private static int deviceStatusMask = 0x1101;
+    private Data currentInfo;
+
     private Context context;
-    public DataProvider(Context context){
+    public DataProvider(Context context, Data currentInfo){
         this.context = context;
         this.currentInfo = currentInfo;
     }

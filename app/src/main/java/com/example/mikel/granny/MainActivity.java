@@ -21,8 +21,9 @@ import io.github.privacystreams.location.LatLon;
 public class MainActivity extends AppCompatActivity {
 
     final String tag = "Main Activity";
-    DataProvider dataProvider;
+    //DataProvider dataProvider;
     ApplicationController applicationController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
 //                startService(new Intent(MainActivity.this, ApplicationController.class));
                 Log.e(tag,"I am here");
-                dataProvider=new DataProvider(getApplicationContext());
-                dataProvider.createProviders();
+                //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
+                //dataProvider.createProviders();
             }
         });
 
