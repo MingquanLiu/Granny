@@ -23,8 +23,8 @@ public class DataProvider {
     private static final long INTERVAL = 2 * 60 * 1000; // 2 minutes
     private static int deviceStatusMask = 0x1101;
     private Data currentInfo;
-
     private Context context;
+
     public DataProvider(Context context, Data currentInfo){
         this.context = context;
         this.currentInfo = currentInfo;
@@ -33,7 +33,6 @@ public class DataProvider {
     public void createProviders(){
         getLoudnessPeriodically();
         getDeviceState();
-
     }
     /**
      * Get the current location.
@@ -43,7 +42,7 @@ public class DataProvider {
     public void getCurrentLocation() {
         try {
             LatLon latLon = new UQI(context)
-                    .getData(Geolocation.asCurrent(Geolocation.LEVEL_CITY), Purpose.UTILITY("check weather"))
+                    .getData(Geolocation.asCurrent(Geolocation.LEVEL_CITY), Purpose.UTILITY("get current location"))
                     .getFirst(Geolocation.LAT_LON);
             // Do something with geolocation
             currentInfo.setPosition(latLon);
