@@ -1,5 +1,7 @@
 package com.example.mikel.granny;
 
+import java.util.LinkedList;
+
 import io.github.privacystreams.location.LatLon;
 
 /**
@@ -21,6 +23,9 @@ public class Data {
     private Boolean isConnected;
     private float batteryLevel;
     private Boolean isscreenon;
+    private LinkedList<BatteryTime> batteryData;
+    private double batterySlope;
+    private double batteryETA;//at what time is the battery dead
 
     private Data(){
         this.location = new LatLon(0.0, 0.0);
@@ -35,6 +40,7 @@ public class Data {
         this.isscreenon = false;
         this.batteryLevel = 0.0f;
         this.loudness = 0.0;
+        batteryData = new LinkedList<BatteryTime>();
     }
 
     /**
@@ -108,7 +114,6 @@ public class Data {
         return loudness;
     }
 
-
     public int getHomeHour(){
         return homeHour;
     }
@@ -136,7 +141,50 @@ public class Data {
     public void setDeviceState(String wifi, Boolean isconnected, float battery, Boolean screen){
         WIFIName = wifi;
         isConnected = isconnected;
-        batteryLevel = battery;
+
+        //monitor the battery change
+        if (batteryLevel != battery){
+            batteryLevel = battery;
+            batteryData.addLast(new BatteryTime(applicationController.getHour(), applicationController.getMinute(), batteryLevel));
+            if (batteryData.size() > 10){
+                batteryData.removeFirst();
+            }
+            if (batteryData.size() > 1){
+                linearRegression();
+            }
+        }
+
         isscreenon = screen;
+    }
+
+    public double getBatteryLife(){
+        if (batterySlope < 0){
+            return 99999;
+        }
+        return batteryETA;
+    }
+    private void linearRegression(){
+        double sumxy = 0.0, sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
+        int n = batteryData.size();
+        for (BatteryTime e : this.batteryData){
+            sumxy += e.battery * e.minuteOfTheDay;
+            sumx += e.minuteOfTheDay;
+            sumy += e.battery;
+            sumx2 += e.minuteOfTheDay * e.minuteOfTheDay;
+        }
+        batterySlope = (n*sumxy - sumx * sumy) / (n * sumx2 - sumx * sumx);
+        double intercept = (sumy - batterySlope * sumy) / n;
+        batteryETA = - intercept / batterySlope;
+    }
+
+
+    private class BatteryTime{
+        int minuteOfTheDay;//x
+        float battery;//y
+
+        BatteryTime(int hour, int minute, float battery){
+            this.minuteOfTheDay = 60 *  hour + minute;
+            this.battery = battery;
+        }
     }
 }

@@ -1,30 +1,18 @@
 package com.example.mikel.granny;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.widget.Toast;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
 
 import java.io.IOException;
 
-import io.github.privacystreams.audio.Audio;
-import io.github.privacystreams.audio.AudioOperators;
-import io.github.privacystreams.core.Callback;
-import io.github.privacystreams.core.UQI;
-import io.github.privacystreams.core.exceptions.PSException;
-import io.github.privacystreams.core.purposes.Purpose;
-import io.github.privacystreams.location.Geolocation;
-import io.github.privacystreams.location.LatLon;
+//import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 NotificationControl controller = new NotificationControl(MainActivity.this);
-                controller.sendNotification("hi", "this is context");
-                startService(new Intent(MainActivity.this, ApplicationController.class));
+                controller.sendNotification("My notification", "Hello World!");
+//                sendNotification();
+//                startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
-
 
 //                VibrateController vibrateController = new VibrateController(getApplicationContext());
 //                vibrateController.vibrateForInterval(2000);
@@ -65,40 +53,38 @@ public class MainActivity extends AppCompatActivity {
 
 //                Log.e(tag,"I am here");
                 //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
-                //dataProvider.createProviders();
+                //dataProvider.c    reateProviders();
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//                GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(getApplicationContext()).load(R.raw.gramma).into(imageView);
 
             }
         });
     }
 
 
-    public void sendNotification() {
-
-        //Get an instance of NotificationManager//
-        count++;
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_action_name)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!"+ count).setPriority(Notification.VISIBILITY_PUBLIC);
-
-
-        // Gets an instance of the NotificationManager service//
-
-        NotificationManager mNotificationManager =
-
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Log.e("Notification","In Notification");
-        // When you issue multiple notifications about the same type of event,
-        // it’s best practice for your app to try to update an existing notification
-        // with this new information, rather than immediately creating a new notification.
-        // If you want to update this notification at a later date, you need to assign it an ID.
-        // You can then use this ID whenever you issue a subsequent notification.
-        // If the previous notification is still visible, the system will update this existing notification,
-        // rather than create a new one. In this example, the notification’s ID is 001//
-
-        mNotificationManager.notify(001, mBuilder.build());
-    }
+//    public void sendNotification() {
+//
+//        //Get an instance of NotificationManager//
+//        String CHANNEL_ID = "my_channel_01";// The id of the channel.
+//        CharSequence name = "Granny";// The user-visible name of the channel.
+//        int importance = NotificationManager.IMPORTANCE_HIGH;
+//        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+//        Notification notification =  new NotificationCompat.Builder(this)
+//                .setSmallIcon(R.drawable.ic_action_name)
+//                .setContentTitle("My notification")
+//                .setContentText("Hello World!"+ count)
+//                .setChannelId(CHANNEL_ID)
+//                .build();
+//
+//        // Gets an instance of the NotificationManager service//
+//
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        mNotificationManager.createNotificationChannel(mChannel);
+//        mNotificationManager.notify(001, notification);
+//    }
 }
 
 
