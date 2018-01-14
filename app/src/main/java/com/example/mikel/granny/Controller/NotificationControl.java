@@ -6,7 +6,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.example.mikel.granny.R;
 import com.example.mikel.granny.WhatsappAutoSelectActivity;
@@ -109,5 +111,45 @@ public class NotificationControl {
 //        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
 //
 //        noti.setStyle(inboxStyle);
+    }
+
+    public void sendNotification2(String title, String text,String address) {
+
+        String CHANNEL_ID = "my_channel_01";// The id of the channel.
+        CharSequence name = "Granny";// The user-visible name of the channel.
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        String[] splited = address.split("\\s+");
+        StringBuilder uri = new StringBuilder("google.navigation:q=");
+        if(splited.length > 0) {
+            for (String s : splited) {
+                uri.append(s);
+                uri.append("+");
+            }
+            uri.deleteCharAt(uri.length() - 1);
+            Log.e("Google Navigation", uri.toString());
+            Uri gmmIntentUri = Uri.parse(uri.toString());
+
+// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+// Make the Intent explicit by setting the Google Maps package
+            mapIntent.setPackage("com.google.android.apps.maps");
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, mapIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification notification;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notification = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.grandma3)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setChannelId(CHANNEL_ID)
+                    .setContentIntent(resultPendingIntent)
+                    .build();
+
+
+            NM.notify(001, notification);
+
+//        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
+//
+//        noti.setStyle(inboxStyle);
+        }
     }
 }

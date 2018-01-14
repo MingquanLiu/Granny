@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.mikel.granny.Controller.GoogleNavigationController;
 import com.example.mikel.granny.Controller.NotificationControl;
 import com.example.mikel.granny.Controller.VibrateController;
 import com.example.mikel.granny.Controller.WallpaperController;
@@ -163,10 +164,10 @@ public class ApplicationController extends Service {
     }
 
     private void shouldBeHomeButNot_OnRoad(){
-        notifController.sendNotification(
+        notifController.sendNotification2(
                 "WHERE ARE YOU",
                 "You d*** child COME HOME AT ONCE. Even your dad got back!",
-                "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
+                currentInfo.getAddress()
         );
         long[] pattern = {500, 300,500, 300};
         vibrateController.vibrateForPattern(pattern, 2);
@@ -316,14 +317,14 @@ public class ApplicationController extends Service {
                     getHomeDefault();
                 }
             }//within 1 mile radius
-            else if (distV < 1500) {
+            else if (distV < 3000) {
                 getNearHome();
             }//far away from home
             else{
-                if (minuteAway <= 0 && !currentInfo.getConnectionStatus()){
+                if (minuteAway <= 0){// && !currentInfo.getConnectionStatus()){
                     shouldBeHomeButNot_OnRoad();
-                }else if(minuteAway<=0){
-                    shouldBeHomeButNot_OnWifi();
+//                }else if(minuteAway<=0){
+//                    shouldBeHomeButNot_OnWifi();
                 } else if(durV  >= (currentInfo.getBatteryLife() - hour*60 - minute)){
                     batteryDyingAwayFromHome(durT);
                 }

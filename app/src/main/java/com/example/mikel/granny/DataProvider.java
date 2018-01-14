@@ -23,7 +23,7 @@ import io.github.privacystreams.utils.Globals;
 
 public class DataProvider {
     private static final long DURATION = 10 * 1000; // 10 seconds
-    private static final long INTERVAL = 1 * 30 * 1000; // 2 minutes
+    private static final long INTERVAL = 1 * 18 * 1000; // 2 minutes
 
     private static int deviceStatusMask = 1+2+4+8+16;
     int count = 0;

@@ -25,15 +25,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//                GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+        imageView.setVisibility(View.VISIBLE);
+        Glide.with(getApplicationContext()).load(R.raw.gramma).into(imageView);
         final Button button = findViewById(R.id.button_id);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
 //                NotificationControl controller = new NotificationControl(MainActivity.this);
 //                controller.sendNotification("My notification", "Hello World!","this is content");
-                GoogleNavigationController googleNavigationController = new GoogleNavigationController(getApplicationContext());
-                googleNavigationController.startNavigation("fuller lab");
+//                GoogleNavigationController googleNavigationController = new GoogleNavigationController(getApplicationContext());
+//                googleNavigationController.startNavigation("fuller lab");
 //                sendNotification();
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
@@ -56,10 +59,7 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e(tag,"I am here");
                 //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
                 //dataProvider.c    reateProviders();
-                ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//                GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-                imageView.setVisibility(View.VISIBLE);
-                Glide.with(getApplicationContext()).load(R.raw.gramma).into(imageView);
+
 
             }
         });
