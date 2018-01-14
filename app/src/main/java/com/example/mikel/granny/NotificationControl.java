@@ -33,13 +33,12 @@ public class NotificationControl extends Activity{
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_action_name)
                         .setContentTitle("My notification")
-                        .setContentText("Hello World!").setPriority(Notification.VISIBILITY_PUBLIC);
+                        .setContentText("Hello World!").setPriority(NotificationManager.IMPORTANCE_HIGH);
 
 
         // Gets an instance of the NotificationManager service//
 
         NotificationManager mNotificationManager =
-
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Log.e("Notification","In Notification");
         // When you issue multiple notifications about the same type of event,
