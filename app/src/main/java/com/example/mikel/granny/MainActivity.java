@@ -9,9 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-
-
-import java.io.IOException;
+import com.example.mikel.granny.Controller.GoogleNavigationController;
+import com.example.mikel.granny.Controller.NotificationControl;
 
 //import com.bumptech.glide.Glide;
 

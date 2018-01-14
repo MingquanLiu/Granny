@@ -1,4 +1,4 @@
-package com.example.mikel.granny;
+package com.example.mikel.granny.Controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +17,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.mikel.granny.R;
+import com.example.mikel.granny.WhatsappAutoSelectActivity;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

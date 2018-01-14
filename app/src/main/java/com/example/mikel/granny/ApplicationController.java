@@ -5,20 +5,20 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.example.mikel.granny.Controller.NotificationControl;
+import com.example.mikel.granny.Controller.VibrateController;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.util.Currency;
 
 /**
  * Created by Lingrui on 1/13/2018.

@@ -1,10 +1,12 @@
-package com.example.mikel.granny;
+package com.example.mikel.granny.Controller;
 
 import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
+
+import com.example.mikel.granny.R;
 
 import java.io.IOException;
 
