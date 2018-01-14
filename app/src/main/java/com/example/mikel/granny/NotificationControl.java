@@ -10,6 +10,8 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +42,7 @@ public class NotificationControl {
         int importance = NotificationManager.IMPORTANCE_HIGH;
         resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
         PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, 0);
+<<<<<<< HEAD
         Notification notification;
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
@@ -50,11 +53,25 @@ public class NotificationControl {
                     .setChannelId(CHANNEL_ID)
                     .setContentIntent(resultPendingIntent)
                     .build();
+=======
+        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Notification notification =  new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_action_name)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setChannelId(CHANNEL_ID)
+//                .setSound(Uri.parse("android.resource://"
+//                        + context.getPackageName() + "/" + R.raw.trouble))
+                .setContentIntent(resultPendingIntent)
+                .build();
+>>>>>>> 1d0be4187f7dee0887422d3a813d9c4534891aed
 
             // Gets an instance of the NotificationManager service//
 
 //        NotificationManager mNotificationManager =
 //                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+<<<<<<< HEAD
             NM.createNotificationChannel(mChannel);
         }else{
             notification = new NotificationCompat.Builder(context)
@@ -66,6 +83,13 @@ public class NotificationControl {
                     .build();
         }
 
+=======
+//        notification.defaults |= Notification.DEFAULT_SOUND;
+//        notification.sound = Uri.parse("android.resource://"
+//                + context.getPackageName() + "/" + R.raw.trouble);
+
+        NM.createNotificationChannel(mChannel);
+>>>>>>> 1d0be4187f7dee0887422d3a813d9c4534891aed
         NM.notify(001, notification);
 
 //        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");

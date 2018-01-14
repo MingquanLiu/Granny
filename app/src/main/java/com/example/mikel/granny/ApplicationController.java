@@ -5,7 +5,19 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.util.Currency;
 
 /**
@@ -20,6 +32,7 @@ public class ApplicationController extends Service {
     NotificationControl notifController;
     private int min = 0;
 
+    Thread thread;
 
     @Override
     public void onCreate(){
@@ -30,6 +43,10 @@ public class ApplicationController extends Service {
         currentInfo = Data.getData(this);
         vibrateController = new VibrateController(getApplicationContext());
         notifController = new NotificationControl(getApplicationContext());
+
+        //double d = getTravelInfo(42.2746, 71.8063, "Time Square");
+        Thread t = new Thread(new Calculate(42.2746, -71.8063, "Time Square"));
+        t.start();
     }
 
     public void infoUpdated(){
@@ -83,6 +100,7 @@ public class ApplicationController extends Service {
             //WhatsApp Grandma telling that you are near?
         }//far away from home
         else{
+
             if (minuteAway <= 0){
                 notifController.sendNotification(
                         "WHERE ARE YOU",
@@ -116,5 +134,77 @@ public class ApplicationController extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+}
+
+
+
+class Calculate implements  Runnable{
+    private double currentlat;
+    private double currentlng;
+    private String destinationAddress;
+
+    public Calculate(double lat, double lng, String dest){
+        currentlat = lat;
+        currentlng = lng;
+        destinationAddress = dest;
+    }
+    public void run(){
+        StringBuilder stringbuilder = new StringBuilder();
+        double estimatetime;
+
+        try{
+            HttpsURLConnection urlConnection = null;
+            destinationAddress = destinationAddress.replaceAll(" ", "+");
+            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+currentlat+","+currentlng+"&destinations="+destinationAddress+"&key=AIzaSyB9iyYjFvVw4KqOB_c0fOqc2jhibdKQnqo";
+//            HttpPost httppost = new HttpPost(url);
+//            HttpClient client = new DefaultHttpClient();
+//            HttpResponse response;
+
+            URL urlObj = new URL(url);
+            urlConnection = (HttpsURLConnection) urlObj.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setReadTimeout(10000 /* milliseconds */ );
+            urlConnection.setConnectTimeout(15000 /* milliseconds */ );
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+            InputStreamReader stream = new InputStreamReader(urlConnection.getInputStream());
+
+
+
+            Log.e("granny", "Started");
+
+//                response = client.execute(httppost);
+//                HttpEntity entity = response.getEntity();
+
+            int b;
+            while((b = stream.read()) != -1) {
+                stringbuilder.append((char) b);
+            }
+            //Log.e("granny", stringbuilder.toString());
+        } catch (MalformedURLException e) {
+            Log.e("Teg", "Error processing Distance Matrix API URL");
+
+
+        } catch ( IOException e){
+
+        }
+
+        //Log.e("granny", stringbuilder.toString());
+
+        JSONObject jsonObject;
+        try{
+            jsonObject  = new JSONObject(stringbuilder.toString());
+            JSONObject rows = jsonObject.getJSONArray("rows").getJSONObject(0);
+            JSONObject elements = rows.getJSONArray("elements").getJSONObject(0);
+            JSONObject distance = elements.getJSONObject("distance");
+            double dist = distance.getDouble("value");
+            JSONObject duration = elements.getJSONObject("duration");
+            double dur = duration.getDouble("value");
+            Log.e("grannyrows: ", elements.toString());
+            Log.e("grannyduration: ", "is "+dur);
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
     }
 }
