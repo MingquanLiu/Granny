@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.mikel.granny.R;
+import com.example.mikel.granny.UpdateNotiStatusActivity;
 import com.example.mikel.granny.WhatsappAutoSelectActivity;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -28,12 +29,15 @@ public class NotificationControl {
 
 
 
-    public void sendNotification(String title, String text) {
+    public void sendNotification(int version,String title, String text) {
 
         String CHANNEL_ID = "my_channel_01";// The id of the channel.
         CharSequence name = "Granny";// The user-visible name of the channel.
         int importance = NotificationManager.IMPORTANCE_HIGH;
         Notification notification;
+        Intent intent = new Intent(context, UpdateNotiStatusActivity.class);
+        intent.putExtra("version", version);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             notification = new NotificationCompat.Builder(context)
@@ -41,6 +45,7 @@ public class NotificationControl {
                     .setContentTitle(title)
                     .setContentText(text)
                     .setChannelId(CHANNEL_ID)
+                    .setContentIntent(pendingIntent)
                     .build();
 
 
@@ -54,6 +59,7 @@ public class NotificationControl {
                     .setContentTitle(title)
                     .setContentText(text)
 //                    .setChannelId(CHANNEL_ID)
+                    .setContentIntent(pendingIntent)
                     .build();
         }
 //        notification.defaults |= Notification.DEFAULT_SOUND;
@@ -67,13 +73,14 @@ public class NotificationControl {
 //        noti.setStyle(inboxStyle);
     }
 
-    public void sendNotification(String title, String text, String whatappText) {
+    public void sendNotification(int version, String title, String text, String whatappText) {
 
         String CHANNEL_ID = "my_channel_01";// The id of the channel.
         CharSequence name = "Granny";// The user-visible name of the channel.
         int importance = NotificationManager.IMPORTANCE_HIGH;
         resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
         resultIntent.putExtra("task",whatappText);
+        resultIntent.putExtra("version", version);
         PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification;
         if (android.os.Build.VERSION.SDK_INT >= 26) {

@@ -27,6 +27,7 @@ public class Data {
     private Boolean isscreenon;//is the screen on
     private LinkedList<BatteryTime> batteryData;
     private double batteryETA;//at what time is the battery dead
+    private boolean[] notificationStatus;
 
     private Data(){
         this.location = new LatLon(0.0, 0.0);
@@ -42,6 +43,11 @@ public class Data {
         batteryData = new LinkedList<BatteryTime>();
         this.batteryETA = 0.0;
         this.homeWifiName = "WPI-Wireless";
+        this.notificationStatus = new boolean[4]; //0 = home, 1 = near home, 2 = shouldBeHomeButNot,3 = battery dying
+        notificationStatus[0] = true;
+        notificationStatus[1] = true;
+        notificationStatus[2] = true;
+        notificationStatus[3] = true;
     }
 
     /**
@@ -66,6 +72,10 @@ public class Data {
     }
 
     //====================Setters============================
+
+    public void setNotificationStatus(int index, boolean bool){
+        notificationStatus[index] = bool;
+    }
 
     public void setHomeLoc(double lat, double lon){
         homeLoc = new LatLon(lat, lon);
@@ -111,6 +121,10 @@ public class Data {
 
 
 //===========Getters==========================
+
+    public boolean getNotiStatus(int index){
+        return notificationStatus[index];
+    }
 
     public double getHomeLat(){
         return homeLoc.getLatitude();

@@ -63,33 +63,41 @@ public class ApplicationController extends Service {
 
         //at home
         if (distance < 0.001 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
-            if (minuteAway > 15 && minuteAway < 360){
-                getHomeEarly();
-            }else if(minuteAway < -60){
-                getHomePrettyLate();
-            }
-            else if (currentInfo.getBatteryLevel() < 10){
-                getHomeLowBattery();
-            }
-            else{
-                getHomeDefault();
+            if (currentInfo.getNotiStatus(0)) {
+                if (minuteAway > 15 && minuteAway < 360) {
+                    getHomeEarly();
+                } else if (minuteAway < -60) {
+                    getHomePrettyLate();
+                } else if (currentInfo.getBatteryLevel() < 10) {
+                    getHomeLowBattery();
+                } else {
+                    getHomeDefault();
+                }
             }
         }//within 1 mile radius
         else if (distance < 0.015) {
-            getNearHome();
+            if (currentInfo.getNotiStatus(1)){
+                getNearHome();
+            }
         }//far away from home
         else{
-            if (minuteAway <= 0 && !currentInfo.getConnectionStatus()){
-                shouldBeHomeButNot_OnRoad();
-            }else if(minuteAway<=0){
-                shouldBeHomeButNot_OnWifi();
-            } else if((currentInfo.getHomeHour() * 60 + currentInfo.getHomeMinute()) - currentInfo.getBatteryLife() > 5){
-                if (currentInfo.getIsscreenon()){
-                    batteryDyingAwayFromHome();
-                }else{
-                    batteryDyingAwayFromHomeScreenOff();
+            if (currentInfo.getNotiStatus(2)) {
+                if (minuteAway <= 0 && !currentInfo.getConnectionStatus()) {
+                    shouldBeHomeButNot_OnRoad();
+                } else if (minuteAway <= 0) {
+                    shouldBeHomeButNot_OnWifi();
                 }
+            }
 
+            if (currentInfo.getNotiStatus(3)) {
+                if ((currentInfo.getHomeHour() * 60 + currentInfo.getHomeMinute()) - currentInfo.getBatteryLife() > 5) {
+                    if (currentInfo.getIsscreenon()) {
+                        batteryDyingAwayFromHome();
+                    } else {
+                        batteryDyingAwayFromHomeScreenOff();
+                    }
+
+                }
             }
         }
     }
@@ -103,7 +111,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomeEarly(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "Oops dinner not ready yet...",
                 "You ought to tell me you are coming home this early! The food is just a few minute away from being done...");
         long[] pattern = {500, 300};
@@ -116,7 +124,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomePrettyLate(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "WHERE DID YOU GO",
                 "Look at you taking so long to get home... Something went wrong? Are you cold? Sorry the food is already cold and I'll heat them up for ya"
         );
@@ -129,7 +137,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomeLowBattery(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "CHARGE YOUR PHONE!",
                 "Your charger is on the LEFT NEAR THE BED's HEAD! Get over and GET YOUR FOOD. "
         );
@@ -137,7 +145,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomeDefault(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "WELCOME HOME!",
                 "Congrats for making your way home on time my sweatheart. Come wash your hand and sit at the table!" +
                         "\n (Wanna cook this yourself? A recipe made from love)"
@@ -152,13 +160,13 @@ public class ApplicationController extends Service {
     }
 
     private void getNearHome(){
-        notifController.sendNotification(
+        notifController.sendNotification(1,
                 "I SENSE YOUR PRESENCE",
                 "Oooooo I feel my grandchild nearby... time to heat up the food!\n" +
                         "(Wanna tell Grandma you are near?)", "Ma I am almost home! "
         );
         long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        vibrateController.vibrateForPattern(pattern, 2);
         try{
             wallpaperController.changeWallPaper(6);
         }catch (Exception e){
@@ -167,7 +175,7 @@ public class ApplicationController extends Service {
     }
 
     private void shouldBeHomeButNot_OnRoad(){
-        notifController.sendNotification(
+        notifController.sendNotification(2,
                 "WHERE ARE YOU",
                 "You d*** child COME HOME AT ONCE. Even your dad got back!",
                 "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
@@ -178,7 +186,7 @@ public class ApplicationController extends Service {
     }
 
     private void shouldBeHomeButNot_OnWifi(){
-        notifController.sendNotification(
+        notifController.sendNotification(2,
                 "Where did you go...",
                 "Why are you not home yet...? Did something happened? Got a new plan? You gotta tell me, or I will be worried.",
                 "Grandma! Sorry I can't be home just yet, [PUT YOUR REASON HERE]"
@@ -187,7 +195,7 @@ public class ApplicationController extends Service {
     }
 
     private void batteryDyingAwayFromHome(){
-        notifController.sendNotification(
+        notifController.sendNotification(3,
                 "Uh oh your battery can't seem to survive long",
                 "I told you not to play on your phone that much! Now what >:( \n",
                 "Sorry my phone is going to die! I will be back soon tho!"
@@ -197,7 +205,7 @@ public class ApplicationController extends Service {
     }
 
     private void batteryDyingAwayFromHomeScreenOff(){
-        notifController.sendNotification(
+        notifController.sendNotification(3,
                 "Told you phone batteries are unreliable >:(",
                 "Sigh these kids who live with their phones on them... useless now huh",
                 "Sorry my phone is going to die! I will be back soon tho!"
