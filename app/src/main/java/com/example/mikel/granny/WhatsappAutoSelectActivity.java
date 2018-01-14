@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -16,14 +17,17 @@ public class WhatsappAutoSelectActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // Get intent, action and MIME type
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        String taskType = intent.getStringExtra("task");
-        if(taskType.equals(" ")){
-            onClickWhatsApp();
+        //Intent intent = getIntent();
+//        String action = intent.getAction();
+//        String type = intent.getType();
+        /*String taskType = intent.getStringExtra("task");
+        if(taskType == null){
+            Log.e("Test","null"+intent.toString());
         }
-
+        else if(taskType.equals("a")){
+            onClickWhatsApp();
+        }*/
+        onClickWhatsApp();
     }
 
     public void onClickWhatsApp() {
