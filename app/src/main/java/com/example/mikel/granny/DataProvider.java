@@ -69,7 +69,6 @@ public class DataProvider {
                          Log.e("Geolocation","LatLon:"+latLon.toString()+" Speed:"+speed+
                                  " Bearing:"+bearing);
                          currentInfo.setPosition(latLon);
-                         currentInfo.setSpeed(speed);
                      }
                  });
 //

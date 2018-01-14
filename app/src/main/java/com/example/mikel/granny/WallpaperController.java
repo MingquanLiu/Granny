@@ -23,14 +23,20 @@ public class WallpaperController {
         WallpaperManager wpm = WallpaperManager.getInstance(context);
 //        Uri uri = Uri.parse("android.resource://com.example.mikel.granny/drawable/wp");
         switch (usecase){
-            case 1:
+            case 2:
                 wpm.setResource(R.drawable.wp2);
                 break;
-            case 2:
+            case 3:
                 wpm.setResource(R.drawable.wp3);
                 break;
-            case 3:
+            case 4:
                 wpm.setResource(R.drawable.wp4);
+                break;
+            case 5:
+                wpm.setResource(R.drawable.wp5);
+                break;
+            case 6:
+                wpm.setResource(R.drawable.wp6);
                 break;
         }
 

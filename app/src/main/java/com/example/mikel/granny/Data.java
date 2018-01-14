@@ -11,20 +11,20 @@ import io.github.privacystreams.location.LatLon;
  */
 
 public class Data {
-    private static Data _data;
+    private static Data _data;//singleton pattern
+    private ApplicationController applicationController;//for observer pattern use
 
-    private String address;
-    private LatLon homeLoc;
-    private LatLon location;
-    private float speed;
-    private int homeHour;
-    private int homeMinute;
-    private Double loudness;
-    private ApplicationController applicationController;
+    private String address;//string version of the home address
+    private LatLon homeLoc;//latitude and longtitude of the home address
+    private LatLon location;//current location
+    private int homeHour;//the hour you should get home by
+    private int homeMinute;//the minute you should get home by
+    private Double loudness;//test
     private String WIFIName;
-    private Boolean isConnected;
-    private float batteryLevel;
-    private Boolean isscreenon;
+    private String homeWifiName;
+    private Boolean isConnected;//whether it is connected to WIFI
+    private float batteryLevel;//percentage
+    private Boolean isscreenon;//is the screen on
     private LinkedList<BatteryTime> batteryData;
     private double batterySlope;
     private double batteryETA;//at what time is the battery dead
@@ -32,8 +32,6 @@ public class Data {
     private Data(){
         this.location = new LatLon(0.0, 0.0);
         this.homeLoc = new LatLon(0.0, 0.0);
-        //this.homeLoc = new LatLon(39.0, 116.0);
-        this.speed = 0;
         this.homeMinute = 0;
         this.homeHour = 0;
         this.WIFIName = "";
@@ -45,6 +43,7 @@ public class Data {
         batteryData = new LinkedList<BatteryTime>();
         this.batterySlope = 0.0;
         this.batteryETA = 0.0;
+        this.homeWifiName = "WPI-Wireless";
     }
 
     /**
@@ -90,11 +89,6 @@ public class Data {
 
     public void setLoudness(Double loudness){
         this.loudness = loudness;
-        applicationController.infoUpdated();
-    }
-
-    public void setSpeed(Float speed){
-        this.speed = speed;
         applicationController.infoUpdated();
     }
 
@@ -171,11 +165,9 @@ public class Data {
         return batteryETA;
     }
 
-    public double getBatterySlope(){
-        return batterySlope;
+    public String getHomeWifiName(){
+        return this.homeWifiName;
     }
-
-
 
     //============Others========================
     private void linearRegression(){
@@ -191,7 +183,6 @@ public class Data {
         double intercept = (sumy - batterySlope * sumx) / n;
         batteryETA = - intercept / batterySlope;
     }
-
 
     private class BatteryTime{
         int minuteOfTheDay;//x
