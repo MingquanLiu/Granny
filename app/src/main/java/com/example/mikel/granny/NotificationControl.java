@@ -3,6 +3,7 @@ package com.example.mikel.granny;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -27,34 +28,36 @@ public class NotificationControl {
 
     public NotificationControl(Context context){
         this.context =  context;
-         NM = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+         NM = (NotificationManager) this.context.getSystemService(NOTIFICATION_SERVICE);
     }
 
+
+
     public void sendNotification(String title, String text) {
-        /*AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(context);
-        }*/
 
-        NotificationCompat.Builder noti = new NotificationCompat.Builder(context).setContentText(text).setContentTitle(title).setSmallIcon(R.drawable.ic_action_name);
+        String CHANNEL_ID = "my_channel_01";// The id of the channel.
+        CharSequence name = "Granny";// The user-visible name of the channel.
+        int importance = NotificationManager.IMPORTANCE_HIGH;
         resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
-        //resultIntent.putExtra("task", "a");
-        //Log.e("Test 0",resultIntent.getStringExtra("task"));
-        //TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        //stackBuilder.addParentStack(WhatsappAutoSelectActivity.class);
-
-// Adds the Intent that starts the Activity to the top of the stack
-        //stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, 0);
-        noti.setContentIntent(resultPendingIntent);
+        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+        Notification notification =  new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_action_name)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setChannelId(CHANNEL_ID)
+                .setContentIntent(resultPendingIntent)
+                .build();
 
-        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
-// Sets a title for the Inbox in expanded layout
-// Moves events into the expanded layout
+        // Gets an instance of the NotificationManager service//
 
-        noti.setStyle(inboxStyle);
-        NM.notify(0, noti.build());
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NM.createNotificationChannel(mChannel);
+        NM.notify(001, notification);
+
+//        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
+//
+//        noti.setStyle(inboxStyle);
     }
 }

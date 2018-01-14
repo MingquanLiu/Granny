@@ -1,5 +1,6 @@
 package com.example.mikel.granny;
 
+import android.app.NotificationChannel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 NotificationControl controller = new NotificationControl(MainActivity.this);
-                controller.sendNotification("hi", "this is context");
+                controller.sendNotification("My notification", "Hello World!");
+//                sendNotification();
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
 
@@ -72,33 +74,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void sendNotification() {
-
-        //Get an instance of NotificationManager//
-        count++;
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_action_name)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!"+ count).setPriority(Notification.VISIBILITY_PUBLIC);
-
-
-        // Gets an instance of the NotificationManager service//
-
-        NotificationManager mNotificationManager =
-
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Log.e("Notification","In Notification");
-        // When you issue multiple notifications about the same type of event,
-        // it’s best practice for your app to try to update an existing notification
-        // with this new information, rather than immediately creating a new notification.
-        // If you want to update this notification at a later date, you need to assign it an ID.
-        // You can then use this ID whenever you issue a subsequent notification.
-        // If the previous notification is still visible, the system will update this existing notification,
-        // rather than create a new one. In this example, the notification’s ID is 001//
-
-        mNotificationManager.notify(001, mBuilder.build());
-    }
+//    public void sendNotification() {
+//
+//        //Get an instance of NotificationManager//
+//        String CHANNEL_ID = "my_channel_01";// The id of the channel.
+//        CharSequence name = "Granny";// The user-visible name of the channel.
+//        int importance = NotificationManager.IMPORTANCE_HIGH;
+//        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+//        Notification notification =  new NotificationCompat.Builder(this)
+//                .setSmallIcon(R.drawable.ic_action_name)
+//                .setContentTitle("My notification")
+//                .setContentText("Hello World!"+ count)
+//                .setChannelId(CHANNEL_ID)
+//                .build();
+//
+//        // Gets an instance of the NotificationManager service//
+//
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        mNotificationManager.createNotificationChannel(mChannel);
+//        mNotificationManager.notify(001, notification);
+//    }
 }
 
 
