@@ -26,7 +26,6 @@ public class Data {
     private float batteryLevel;//percentage
     private Boolean isscreenon;//is the screen on
     private LinkedList<BatteryTime> batteryData;
-    private double batterySlope;
     private double batteryETA;//at what time is the battery dead
 
     private Data(){
@@ -41,7 +40,6 @@ public class Data {
         this.batteryLevel = 10.0f;
         this.loudness = 0.0;
         batteryData = new LinkedList<BatteryTime>();
-        this.batterySlope = 0.0;
         this.batteryETA = 0.0;
         this.homeWifiName = "WPI-Wireless";
     }
@@ -159,7 +157,7 @@ public class Data {
     }
 
     public double getBatteryLife(){
-        if (batterySlope > 0){
+        if (batteryETA < 10){
             return 99999;
         }
         return batteryETA;
@@ -170,6 +168,14 @@ public class Data {
     }
 
     //============Others========================
+
+    public void logData(){
+        Log.i("Home Location: ", "address: " + address + "\tHomeLoc: " + homeLoc.toString() + "\t Current Location: " + location);
+        Log.i("Set Arrival Time: ", homeHour + ":" + homeMinute);
+        Log.i("Connection: ", "current Wifi name: " + WIFIName + "\tHomewifi: " + homeWifiName + "\t connected: " + isConnected);
+        Log.i("Battery: ", "battery level: " + batteryLevel + "\t isScreenOn: " + isscreenon + "\tbatteryETA" + batteryETA);
+    }
+
     private void linearRegression(){
         double sumxy = 0.0, sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
         int n = batteryData.size();
@@ -179,7 +185,7 @@ public class Data {
             sumy += e.battery;
             sumx2 += e.minuteOfTheDay * e.minuteOfTheDay;
         }
-        batterySlope = (n*sumxy - sumx * sumy) / (n * sumx2 - sumx * sumx);
+        double batterySlope = (n*sumxy - sumx * sumy) / (n * sumx2 - sumx * sumx);
         double intercept = (sumy - batterySlope * sumx) / n;
         batteryETA = - intercept / batterySlope;
     }

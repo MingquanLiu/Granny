@@ -33,7 +33,6 @@ public class ApplicationController extends Service {
     VibrateController vibrateController;
     NotificationControl notifController;
     WallpaperController wallpaperController;
-    private int min = 0;
 
     Thread thread;
 
@@ -59,6 +58,8 @@ public class ApplicationController extends Service {
         double distance = Math.sqrt((currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude())*(currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude()) +
                 (currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude())*(currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude()));//direct distance to home
         int minuteAway = (currentInfo.getHomeHour() - hour) * 60 + (currentInfo.getHomeMinute() - minute);//positive if not yet reached the set time
+
+        currentInfo.logData();
 
         //at home
         if (distance < 0.001 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
