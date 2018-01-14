@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                NotificationControl controller = new NotificationControl(MainActivity.this);
-                controller.sendNotification("My notification", "Hello World!","this is content");
+//                NotificationControl controller = new NotificationControl(MainActivity.this);
+//                controller.sendNotification("My notification", "Hello World!","this is content");
                 GoogleNavigationController googleNavigationController = new GoogleNavigationController(getApplicationContext());
                 googleNavigationController.startNavigation("fuller lab");
 //                sendNotification();

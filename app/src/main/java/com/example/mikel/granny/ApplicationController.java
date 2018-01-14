@@ -55,6 +55,7 @@ public class ApplicationController extends Service {
     public void infoUpdated(){
         Thread t = new Thread(new Calculate());
         t.start();
+//        Log.e("Info Updated","Update info");
 //        int hour =  getHour();//current hour
 //        int minute = getMinute();//current minute
 //        double distance = Math.sqrt((currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude())*(currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude()) +
@@ -84,7 +85,7 @@ public class ApplicationController extends Service {
 //            }else if(minuteAway<=0){
 //                shouldBeHomeButNot_OnWifi();
 //            } else if((currentInfo.getHomeHour() * 60 + currentInfo.getHomeMinute()) - currentInfo.getBatteryLife() > 5){
-//                batteryDyingAwayFromHome();
+//                batteryDyingAwayFromHome("durT");
 //            }
 //        }
     }
@@ -101,8 +102,8 @@ public class ApplicationController extends Service {
         notifController.sendNotification(
                 "Oops dinner not ready yet...",
                 "You ought to tell me you are coming home this early! The food is just a few minute away from being done...");
-        long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        long[] pattern = {500, 300, 500, 300};
+        vibrateController.vibrateForPattern(pattern, 2);
         try{
             wallpaperController.changeWallPaper(3);
         }catch (Exception e){
@@ -152,8 +153,8 @@ public class ApplicationController extends Service {
                 "Oooooo I feel my grandchild nearby... time to heat up the food!\n" +
                         "(Wanna tell Grandma you are near?)", "Ma I am almost home! "
         );
-        long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        long[] pattern = {500, 300,500,300};
+        vibrateController.vibrateForPattern(pattern, 2);
         try{
             wallpaperController.changeWallPaper(6);
         }catch (Exception e){
@@ -167,7 +168,7 @@ public class ApplicationController extends Service {
                 "You d*** child COME HOME AT ONCE. Even your dad got back!",
                 "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
         );
-        long[] pattern = {500, 300};
+        long[] pattern = {500, 300,500, 300};
         vibrateController.vibrateForPattern(pattern, 2);
         vibrateController.vibrateForInterval(1500);
     }
