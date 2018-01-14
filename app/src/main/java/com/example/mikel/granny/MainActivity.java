@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 //                openWhatsappContact1(number);
 
 
-                VibrateController vibrateController = new VibrateController(getApplicationContext());
-                vibrateController.vibrateForInterval(2000);
+//                VibrateController vibrateController = new VibrateController(getApplicationContext());
+//                vibrateController.vibrateForInterval(2000);
 
                 WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
                 try {

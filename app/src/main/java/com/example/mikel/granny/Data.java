@@ -19,19 +19,25 @@ public class Data {
     private String WIFIName;
     private Boolean isConnected;
     private float batteryLevel;
-    private Boolean isScreenOn;
+    private Boolean isscreenon;
 
     private Data(){
-        this.location = null;
+        this.location = new LatLon(0.0, 0.0);
+        this.homeLoc = new LatLon(0.0, 0.0);
+        this.homeMinute = 0;
+        this.homeHour = 0;
+        this.WIFIName = "";
+        this.address = "";
+        this.isConnected = false;
+        this.isscreenon = false;
+        this.batteryLevel = 0.0f;
         this.loudness = 0.0;
     }
-//
-//    public Data(ApplicationController ac){
-//        this.applicationController = ac;
-//        this.location = null;
-//        this.loudness = 0.0;
-//    }
 
+    /**
+     * Single instance of Data
+     * @return
+     */
     public static Data getData(){
         if(_data == null){
             _data = new Data();
@@ -39,16 +45,37 @@ public class Data {
         return _data;
     }
 
+    /**
+     * Set the given ApplicationController as the listener of the class
+     * @param ac
+     * @return
+     */
     public static Data getData(ApplicationController ac){
         getData().applicationController = ac;
         return _data;
     }
+
+
     public void setAddress(String a){
         this.address = a;
     }
+
+    public String getAddress(){
+        return address;
+    }
+
     public void setHomeLoc(double lat, double lon){
         homeLoc = new LatLon(lat, lon);
     }
+
+    public double getHomeLat(){
+        return homeLoc.getLatitude();
+    }
+
+    public double getHomeLon(){
+        return homeLoc.getLongitude();
+    }
+
     public void setHomeTime(int hour, int minute){
         this.homeHour = hour;
         this.homeMinute = minute;
@@ -76,9 +103,6 @@ public class Data {
         return loudness;
     }
 
-    public String getAddress(){
-        return address;
-    }
 
     public int getHomeHour(){
         return homeHour;
@@ -88,10 +112,26 @@ public class Data {
         return homeMinute;
     }
 
+    public String getWIFIName(){
+        return WIFIName;
+    }
+
+    public Boolean getConnectionStatus(){
+        return isConnected;
+    }
+
+    public Boolean isScreenOn(){
+        return isscreenon;
+    }
+
+    public float getBatteryLevel(){
+        return batteryLevel;
+    }
+
     public void setDeviceState(String wifi, Boolean isconnected, float battery, Boolean screen){
         WIFIName = wifi;
         isConnected = isconnected;
         batteryLevel = battery;
-        isScreenOn = screen;
+        isscreenon = screen;
     }
 }

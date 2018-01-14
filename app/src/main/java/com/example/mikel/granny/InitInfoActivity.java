@@ -36,7 +36,9 @@ public class InitInfoActivity extends FragmentActivity {
                 Log.e("InitInfoActivity: ", "get Address: " + data.getAddress() + "\t get home time: " +  data.getHomeHour() + ":" + data.getHomeMinute());
                 DataProvider dataProvider = new DataProvider(getApplicationContext());
                 dataProvider.createProviders();
-                if (!data.getAddress().equals("") && (data.getHomeHour() != 0 || data.getHomeMinute() != 0)){
+//                if (!data.getAddress().equals("")
+                if ((data.getHomeLat() != 0 || data.getHomeLon() != 0)
+                        && (data.getHomeHour() != 0 || data.getHomeMinute() != 0)){
                     finish();
                 }
             }
