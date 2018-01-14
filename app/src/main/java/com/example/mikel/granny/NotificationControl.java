@@ -23,6 +23,8 @@ public class NotificationControl {
     private NotificationManager NM;
     private Context context;
     Intent resultIntent;
+
+
     public NotificationControl(Context context){
         this.context =  context;
          NM = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
