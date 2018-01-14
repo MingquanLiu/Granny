@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 GoogleNavigationController googleNavigationController = new GoogleNavigationController(getApplicationContext());
                 googleNavigationController.startNavigation("fuller lab");
 //                sendNotification();
-//                startService(new Intent(MainActivity.this, ApplicationController.class));
+                startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
 
 //                VibrateController vibrateController = new VibrateController(getApplicationContext());
