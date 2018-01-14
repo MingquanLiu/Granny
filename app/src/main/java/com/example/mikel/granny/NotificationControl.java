@@ -10,6 +10,8 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -39,11 +41,14 @@ public class NotificationControl {
         resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
         PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, 0);
         NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         Notification notification =  new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_action_name)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setChannelId(CHANNEL_ID)
+//                .setSound(Uri.parse("android.resource://"
+//                        + context.getPackageName() + "/" + R.raw.trouble))
                 .setContentIntent(resultPendingIntent)
                 .build();
 
@@ -51,6 +56,10 @@ public class NotificationControl {
 
 //        NotificationManager mNotificationManager =
 //                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//        notification.defaults |= Notification.DEFAULT_SOUND;
+//        notification.sound = Uri.parse("android.resource://"
+//                + context.getPackageName() + "/" + R.raw.trouble);
+
         NM.createNotificationChannel(mChannel);
         NM.notify(001, notification);
 

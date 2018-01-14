@@ -1,31 +1,18 @@
 package com.example.mikel.granny;
 
-import android.app.NotificationChannel;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.widget.Toast;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
 
 import java.io.IOException;
 
-import io.github.privacystreams.audio.Audio;
-import io.github.privacystreams.audio.AudioOperators;
-import io.github.privacystreams.core.Callback;
-import io.github.privacystreams.core.UQI;
-import io.github.privacystreams.core.exceptions.PSException;
-import io.github.privacystreams.core.purposes.Purpose;
-import io.github.privacystreams.location.Geolocation;
-import io.github.privacystreams.location.LatLon;
+//import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,9 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 NotificationControl controller = new NotificationControl(MainActivity.this);
                 controller.sendNotification("My notification", "Hello World!");
 //                sendNotification();
-                startService(new Intent(MainActivity.this, ApplicationController.class));
+//                startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
-
 
 //                VibrateController vibrateController = new VibrateController(getApplicationContext());
 //                vibrateController.vibrateForInterval(2000);
@@ -67,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
 //                Log.e(tag,"I am here");
                 //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
-                //dataProvider.createProviders();
+                //dataProvider.c    reateProviders();
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//                GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(getApplicationContext()).load(R.raw.gramma).into(imageView);
 
             }
         });
