@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 NotificationControl controller = new NotificationControl(MainActivity.this);
                 controller.sendNotification("My notification", "Hello World!");
 //                sendNotification();
-//                startService(new Intent(MainActivity.this, ApplicationController.class));
+                startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
 
 //                VibrateController vibrateController = new VibrateController(getApplicationContext());

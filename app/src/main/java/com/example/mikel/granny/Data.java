@@ -40,7 +40,7 @@ public class Data {
         this.address = "";
         this.isConnected = false;
         this.isscreenon = false;
-        this.batteryLevel = 100.0f;
+        this.batteryLevel = 10.0f;
         this.loudness = 0.0;
         batteryData = new LinkedList<BatteryTime>();
         this.batterySlope = 0.0;
@@ -79,6 +79,9 @@ public class Data {
         this.homeMinute = minute;
     }
 
+    public void setHomeAddress(String address){
+        this.address = address;
+    }
 
     public void setPosition(LatLon loc){
         location = loc;
@@ -185,7 +188,7 @@ public class Data {
             sumx2 += e.minuteOfTheDay * e.minuteOfTheDay;
         }
         batterySlope = (n*sumxy - sumx * sumy) / (n * sumx2 - sumx * sumx);
-        double intercept = (sumy - batterySlope * sumy) / n;
+        double intercept = (sumy - batterySlope * sumx) / n;
         batteryETA = - intercept / batterySlope;
     }
 

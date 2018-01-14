@@ -54,37 +54,23 @@
         android:layout_height="33dp"
         android:layout_marginEnd="54dp"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="28dp"
         android:text="When should you be home? "
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeLong" />
+        app:layout_constraintTop_toBottomOf="@+id/addressField" />
 
     <EditText
-        android:id="@+id/homeLong"
-        android:layout_width="158dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="28dp"
+        android:id="@+id/addressField"
+        android:layout_width="283dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Home Longtitude"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/homeLat"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/homeLat"
-        android:layout_width="158dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Home Latitude"
-        android:inputType="numberDecimal"
+        android:hint="Where do you live?"
+        android:inputType="textPostalAddress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
