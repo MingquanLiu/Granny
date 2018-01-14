@@ -1,22 +1,12 @@
 package com.example.mikel.granny.Controller;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 
 import com.example.mikel.granny.R;
 import com.example.mikel.granny.WhatsappAutoSelectActivity;
@@ -89,7 +79,7 @@ public class NotificationControl {
         if (android.os.Build.VERSION.SDK_INT >= 26) {
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             notification = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.ic_action_name)
+                    .setSmallIcon(R.drawable.grandma3)
                     .setContentTitle(title)
                     .setContentText(text)
                     .setChannelId(CHANNEL_ID)
@@ -103,7 +93,7 @@ public class NotificationControl {
             NM.createNotificationChannel(mChannel);
         }else{
             notification = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.ic_action_name)
+                    .setSmallIcon(R.drawable.grandma3)
                     .setContentTitle(title)
                     .setContentText(text)
 //                    .setChannelId(CHANNEL_ID)

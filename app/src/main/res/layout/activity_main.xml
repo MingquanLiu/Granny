@@ -10,25 +10,30 @@
         android:id="@+id/button_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
         android:layout_marginEnd="135dp"
         android:layout_marginStart="161dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="456dp"
         android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="371dp"
-        android:layout_height="366dp"
-        android:layout_marginBottom="64dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="9dp"
+        android:layout_width="335dp"
+        android:layout_height="341dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="102dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
 </android.support.constraint.ConstraintLayout>
