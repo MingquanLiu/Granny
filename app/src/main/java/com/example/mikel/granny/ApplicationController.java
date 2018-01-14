@@ -1,5 +1,6 @@
 package com.example.mikel.granny;
 
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -8,6 +9,7 @@ import android.util.Log;
 
 import com.example.mikel.granny.Controller.NotificationControl;
 import com.example.mikel.granny.Controller.VibrateController;
+import com.example.mikel.granny.Controller.WallpaperController;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,7 +33,6 @@ public class ApplicationController extends Service {
     VibrateController vibrateController;
     NotificationControl notifController;
     WallpaperController wallpaperController;
-    private int min = 0;
 
     Thread thread;
 
@@ -158,7 +159,6 @@ public class ApplicationController extends Service {
         }catch (Exception e){
             System.err.println("Can't change to wallpaper " + 6);
         }
-
     }
 
     private void shouldBeHomeButNot_OnRoad(){
@@ -168,14 +168,14 @@ public class ApplicationController extends Service {
                 "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
         );
         long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        vibrateController.vibrateForPattern(pattern, 2);
         vibrateController.vibrateForInterval(1500);
     }
 
     private void shouldBeHomeButNot_OnWifi(){
         notifController.sendNotification(
                 "Where did you go...",
-                "Why are you not home yet...? Did something happened? Got a new plan? You gotta tell me, or I will be worried 0.0",
+                "Why are you not home yet...? Did something happened? Got a new plan? You gotta tell me, or I will be worried.",
                 "Grandma! Sorry I can't be home just yet, [PUT YOUR REASON HERE]"
         );
         vibrateController.vibrateForInterval(1500);
@@ -184,12 +184,21 @@ public class ApplicationController extends Service {
     private void batteryDyingAwayFromHome(String durT){
         notifController.sendNotification(
                 "Uh oh your battery can't seem to survive long",
-                "I told you not to play on your phone that much! Now what >:( \n" +
-                        "Sigh turn off your phone and we'll look out for you.",
+                "I told you not to play on your phone that much! Now what >:( \n",
                 "Sorry my phone is going to die! I will be back in about"+ durT+"tho!"
+
         );
         vibrateController.vibrateForInterval(3000);
         //text your fam your ETA?
+    }
+
+    private void batteryDyingAwayFromHomeScreenOff(){
+        notifController.sendNotification(
+                "Told you phone batteries are unreliable >:(",
+                "Sigh these kids who live with their phones on them... useless now huh",
+                "Sorry my phone is going to die! I will be back soon tho!"
+        );
+        vibrateController.vibrateForInterval(3000);
     }
 
     @Override
@@ -221,11 +230,7 @@ public class ApplicationController extends Service {
 //        destinationAddress = dest;
         }
         public void run(){
-
-
-
-
-
+            currentInfo.logData();
             StringBuilder stringbuilder = new StringBuilder();
             try{
                 HttpsURLConnection urlConnection = null;
