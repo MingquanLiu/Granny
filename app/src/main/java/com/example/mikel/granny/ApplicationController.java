@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,7 +50,7 @@ public class ApplicationController extends Service {
         wallpaperController = new WallpaperController(getApplicationContext());
 
         //double d = getTravelInfo(42.2746, 71.8063, "Time Square");
-//        Thread t = new Thread(new Calculate(42.2746, -71.8063, "Time Square"));
+//        Thread t = new Thread(new Calculate());
 //        t.start();
     }
 
@@ -100,7 +101,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomeEarly(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "Oops dinner not ready yet...",
                 "You ought to tell me you are coming home this early! The food is just a few minute away from being done...");
         long[] pattern = {500, 300, 500, 300};
@@ -113,7 +114,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomePrettyLate(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "WHERE DID YOU GO",
                 "Look at you taking so long to get home... Something went wrong? Are you cold? Sorry the food is already cold and I'll heat them up for ya"
         );
@@ -126,7 +127,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomeLowBattery(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "CHARGE YOUR PHONE!",
                 "Your charger is on the LEFT NEAR THE BED's HEAD! Get over and GET YOUR FOOD. "
         );
@@ -134,7 +135,7 @@ public class ApplicationController extends Service {
     }
 
     private void getHomeDefault(){
-        notifController.sendNotification(
+        notifController.sendNotification(0,
                 "WELCOME HOME!",
                 "Congrats for making your way home on time my sweatheart. Come wash your hand and sit at the table!" +
                         "\n (Wanna cook this yourself? A recipe made from love)"
@@ -149,12 +150,14 @@ public class ApplicationController extends Service {
     }
 
     private void getNearHome(){
-        notifController.sendNotification(
+        notifController.sendNotification(1,
                 "I SENSE YOUR PRESENCE",
                 "Oooooo I feel my grandchild nearby... time to heat up the food!\n" +
                         "(Wanna tell Grandma you are near?)", "Ma I am almost home! "
         );
-        long[] pattern = {500, 300,500,300};
+
+        long[] pattern = {500, 300, 500, 300};
+
         vibrateController.vibrateForPattern(pattern, 2);
         try{
             wallpaperController.changeWallPaper(6);
@@ -164,7 +167,7 @@ public class ApplicationController extends Service {
     }
 
     private void shouldBeHomeButNot_OnRoad(){
-        notifController.sendNotification2(
+        notifController.sendNotification2(2,
                 "WHERE ARE YOU",
                 "You d*** child COME HOME AT ONCE. Even your dad got back!",
                 currentInfo.getAddress()
@@ -175,7 +178,7 @@ public class ApplicationController extends Service {
     }
 
     private void shouldBeHomeButNot_OnWifi(){
-        notifController.sendNotification(
+        notifController.sendNotification(2,
                 "Where did you go...",
                 "Why are you not home yet...? Did something happened? Got a new plan? You gotta tell me, or I will be worried.",
                 "Grandma! Sorry I can't be home just yet, [PUT YOUR REASON HERE]"
@@ -183,25 +186,39 @@ public class ApplicationController extends Service {
         vibrateController.vibrateForInterval(1500);
     }
 
-    private void batteryDyingAwayFromHome(String durT){
-        notifController.sendNotification(
+
+    private void batteryDyingFarAwayFromHome(String durT, String currentAddr){
+        notifController.sendNotification(3,
                 "Uh oh your battery can't seem to survive long",
                 "I told you not to play on your phone that much! Now what >:( \n",
-                "Sorry my phone is going to die! I will be back in about"+ durT+"tho!"
+                "Sorry my phone is going to die! I will be back in about"+ durT+"tho!\n"+"I am currently at "+currentAddr
 
         );
         vibrateController.vibrateForInterval(3000);
         //text your fam your ETA?
     }
 
-    private void batteryDyingAwayFromHomeScreenOff(){
-        notifController.sendNotification(
-                "Told you phone batteries are unreliable >:(",
-                "Sigh these kids who live with their phones on them... useless now huh",
-                "Sorry my phone is going to die! I will be back soon tho!"
+
+    private void batteryDyingNotFarFromHome(String durT, String currentAddr){
+        notifController.sendNotification(3,
+                "Uh oh your battery can't seem to survive long",
+                "I told you not to play on your phone that much! Now what >:( \n",
+                "Sorry my phone is going to die! I will be back soon in about"+ durT+"tho!\n"+"I am currently at "+currentAddr
+
         );
         vibrateController.vibrateForInterval(3000);
+        //text your fam your ETA?
     }
+
+//    private void batteryDyingAwayFromHomeScreenOff(String durT, String currentAddr){
+//        notifController.sendNotification(
+//                "Told you phone batteries are unreliable >:(",
+//                "Sigh these kids who live with their phones on them... useless now huh",
+//                "Sorry my phone is going to die! I will be back in about"+ durT+"tho!\n"+"I am currently at "+currentAddr
+//
+//        );
+//        vibrateController.vibrateForInterval(3000);
+//    }
 
     @Override
     public void onDestroy(){
@@ -277,11 +294,18 @@ public class ApplicationController extends Service {
             double durV = 0;
             String distT = null;
             String durT = null;
+            String currentaddr = null;
 
 
             JSONObject jsonObject;
             try{
                 jsonObject  = new JSONObject(stringbuilder.toString());
+                //Log.e("Granny lat,lng", "lat"+currentlat+"lng"+currentlng);
+                //Log.e("Granny GOOGLE API", stringbuilder.toString());
+                JSONArray addr = jsonObject.getJSONArray("origin_addresses");
+                currentaddr = addr.getString(0);
+                //Log.e("grannycurrentAddr ", currentaddr);
+
                 JSONObject rows = jsonObject.getJSONArray("rows").getJSONObject(0);
                 JSONObject elements = rows.getJSONArray("elements").getJSONObject(0);
                 JSONObject distance = elements.getJSONObject("distance");
@@ -290,12 +314,13 @@ public class ApplicationController extends Service {
                 JSONObject duration = elements.getJSONObject("duration");
                 durV = duration.getDouble("value");
                 durT = duration.getString("text");
-            Log.e("grannyrows: ", elements.toString());
+            //Log.e("grannyrows: ", elements.toString());
             Log.e("grannyduration: ", durT+durV+distT+distV);
             } catch (JSONException e){
                 e.printStackTrace();
             }
 
+            Log.e("GrannyCurrentAddress: ", currentaddr);
 
             int hour =  getHour();//current hour
             int minute = getMinute();//current minute
@@ -303,32 +328,43 @@ public class ApplicationController extends Service {
 //                    (currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude())*(currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude()));//direct distance to home
             int minuteAway = (currentInfo.getHomeHour() - hour) * 60 + (currentInfo.getHomeMinute() - minute);//positive if not yet reached the set time
 
+            currentInfo.logData();
+
             //at home
-            if (distV < 100 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
-                if (minuteAway > 15 && minuteAway < 360){
-                    getHomeEarly();
-                }else if(minuteAway < -60){
-                    getHomePrettyLate();
+            if (distV < 4000 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
+                if (currentInfo.getNotiStatus(0)) {
+                    if (minuteAway > 15 && minuteAway < 360) {
+                        getHomeEarly();
+                    } else if (minuteAway < -60) {
+                        getHomePrettyLate();
+                    } else if (currentInfo.getBatteryLevel() < 10) {
+                        getHomeLowBattery();
+                    } else {
+                        getHomeDefault();
+                    }
                 }
-                else if (currentInfo.getBatteryLevel() < 10){
-                    getHomeLowBattery();
-                }
-                else{
-                    getHomeDefault();
-                }
-            }//within 1 mile radius
-            else if (distV < 3000) {
-                getNearHome();
-            }//far away from home
-            else{
-                if (minuteAway <= 0){// && !currentInfo.getConnectionStatus()){
-                    shouldBeHomeButNot_OnRoad();
-//                }else if(minuteAway<=0){
-//                    shouldBeHomeButNot_OnWifi();
-                } else if(durV  >= (currentInfo.getBatteryLife() - hour*60 - minute)){
-                    batteryDyingAwayFromHome(durT);
-                }
-            }
+            }//within 1 mile radius - 3000 m
+//            else if (distV < 3000) {
+//                if (currentInfo.getNotiStatus(1)){
+//                    getNearHome();
+//                }
+//            }//far away from home
+//            else{
+//                if (currentInfo.getNotiStatus(2)) {
+//                    if (minuteAway <= 0){// && !currentInfo.getConnectionStatus()) {
+//                        shouldBeHomeButNot_OnRoad();
+//                    }/* else if (minuteAway <= 0) {
+//                        shouldBeHomeButNot_OnWifi();
+//                    }*/
+//                }
+//                if (currentInfo.getNotiStatus(3)) {
+//                    if (durV - (currentInfo.getBatteryLife() - hour * 60 - minute) >= 30) {
+//                        batteryDyingNotFarFromHome(durT, currentaddr);
+//                    } else if (durV >= (currentInfo.getBatteryLife() - hour * 60 - minute)) {
+//                        batteryDyingNotFarFromHome(durT, currentaddr);
+//                    }
+//                }
+//            }
         }
     }
 }

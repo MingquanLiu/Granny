@@ -21,6 +21,13 @@ public class WhatsappAutoSelectActivity extends Activity {
 //        String action = intent.getAction();
 //        String type = intent.getType();
         String content = intent.getStringExtra("task");
+
+        //update the status of the calling notification
+        String c = intent.getStringExtra("version");
+        Log.e("index: ", c);
+        int index = Integer.parseInt(intent.getStringExtra("version"));
+        Data.getData().setNotificationStatus(index, false);
+
         if(content == null){
             Log.e("Test","null"+intent.toString());
         }
