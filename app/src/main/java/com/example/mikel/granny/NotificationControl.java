@@ -52,10 +52,11 @@ public class NotificationControl {
                     .setChannelId(CHANNEL_ID)
                     .setContentIntent(resultPendingIntent)
                     .build();
-            // Gets an instance of the NotificationManager service//
+
 
 //        NotificationManager mNotificationManager =
 //                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
             NM.createNotificationChannel(mChannel);
         }else{
             notification = new NotificationCompat.Builder(context)
@@ -66,7 +67,10 @@ public class NotificationControl {
                     .setContentIntent(resultPendingIntent)
                     .build();
         }
-        
+//        notification.defaults |= Notification.DEFAULT_SOUND;
+//        notification.sound = Uri.parse("android.resource://"
+//                + context.getPackageName() + "/" + R.raw.trouble);
+
         NM.notify(001, notification);
 
 //        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
