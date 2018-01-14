@@ -1,6 +1,7 @@
 package com.example.mikel.granny;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,9 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-
-
-import java.io.IOException;
+import com.example.mikel.granny.Controller.GoogleNavigationController;
+import com.example.mikel.granny.Controller.NotificationControl;
 
 //import com.bumptech.glide.Glide;
 
@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
                 NotificationControl controller = new NotificationControl(MainActivity.this);
                 controller.sendNotification("My notification", "Hello World!","this is content");
+                GoogleNavigationController googleNavigationController = new GoogleNavigationController(getApplicationContext());
+                googleNavigationController.startNavigation("fuller lab");
 //                sendNotification();
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
@@ -39,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
 //                VibrateController vibrateController = new VibrateController(getApplicationContext());
 //                vibrateController.vibrateForInterval(2000);
 
-                WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
-                try {
-                    wallpaperController.changeWallPaper(2);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
+//                try {
+//                    wallpaperController.changeWallPaper(2);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
 
 //                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelectActivity.class);
@@ -85,6 +87,20 @@ public class MainActivity extends AppCompatActivity {
 //        mNotificationManager.createNotificationChannel(mChannel);
 //        mNotificationManager.notify(001, notification);
 //    }
+
+    public void initGoogleMap(){
+        // Create a Uri from an intent string. Use the result to create an Intent.
+//        Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=fuller+lab");
+
+// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+// Make the Intent explicit by setting the Google Maps package
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+// Attempt to start an activity that can handle the Intent
+        startActivity(mapIntent);
+    }
 }
 
 

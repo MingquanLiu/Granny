@@ -1,4 +1,4 @@
-package com.example.mikel.granny;
+package com.example.mikel.granny.Controller;
 
 import android.content.Context;
 import android.os.Vibrator;
