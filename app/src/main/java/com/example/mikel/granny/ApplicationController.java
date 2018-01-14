@@ -18,6 +18,7 @@ public class ApplicationController extends Service {
     Data currentInfo;
     VibrateController vibrateController;
     NotificationControl notifController;
+    private int min = 0;
 
 
     @Override
@@ -37,6 +38,15 @@ public class ApplicationController extends Service {
         double distance = Math.sqrt((currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude())*(currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude()) +
                 (currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude())*(currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude()));
         int minuteAway = (currentInfo.getHomeHour() - hour) * 60 + (currentInfo.getHomeMinute() - minute);//positive if not yet reached the current time
+
+
+
+//        if (min != minute){
+//            min = minute;
+//            Log.i("Battery level ", "************************ Battery: " + currentInfo.getBatteryLevel() +  "\t Time: "  + hour + ":" + minute + "\n"
+//                    + " \t Battery Slope: " + currentInfo.getBatterySlope() + " \t Battery ETA" + currentInfo.getBatteryLife());
+//            currentInfo.setDeviceState(currentInfo.getWIFIName(), currentInfo.getConnectionStatus(), currentInfo.getBatteryLevel() - 1, currentInfo.getIsscreenon());
+//        }
 
         //at home
         if (distance < 0.001){

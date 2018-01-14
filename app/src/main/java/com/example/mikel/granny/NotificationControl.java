@@ -40,20 +40,32 @@ public class NotificationControl {
         int importance = NotificationManager.IMPORTANCE_HIGH;
         resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
         PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, 0);
-        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-        Notification notification =  new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_action_name)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setChannelId(CHANNEL_ID)
-                .setContentIntent(resultPendingIntent)
-                .build();
+        Notification notification;
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notification = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_action_name)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setChannelId(CHANNEL_ID)
+                    .setContentIntent(resultPendingIntent)
+                    .build();
 
-        // Gets an instance of the NotificationManager service//
+            // Gets an instance of the NotificationManager service//
 
 //        NotificationManager mNotificationManager =
 //                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        NM.createNotificationChannel(mChannel);
+            NM.createNotificationChannel(mChannel);
+        }else{
+            notification = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_action_name)
+                    .setContentTitle(title)
+                    .setContentText(text)
+//                    .setChannelId(CHANNEL_ID)
+                    .setContentIntent(resultPendingIntent)
+                    .build();
+        }
+
         NM.notify(001, notification);
 
 //        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
