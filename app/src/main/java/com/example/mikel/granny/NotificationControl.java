@@ -1,55 +1,58 @@
 package com.example.mikel.granny;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class NotificationControl extends Activity{
+import static android.content.Context.NOTIFICATION_SERVICE;
+
+public class NotificationControl {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)  {
-        super.onCreate(savedInstanceState);
-
-//        NotificationManager NM = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        Intent intent = getIntent();
-////        String title= intent.getStringExtra("title");
-////        String context = intent.getStringExtra("text");
-//        Notification noti = new Notification.Builder(getApplicationContext()).setContentText("aaa").setContentTitle("bbb").setSmallIcon(R.drawable.ic_action_name).build();
-//        NM.notify(0, noti);
-        sendNotification();
+    private NotificationManager NM;
+    private Context context;
+    Intent resultIntent;
+    public NotificationControl(Context context){
+        this.context =  context;
+         NM = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
     }
 
-    public void sendNotification() {
+    public void sendNotification(String title, String text) {
+        /*AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
+        }*/
 
-        //Get an instance of NotificationManager//
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_action_name)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!").setPriority(Notification.VISIBILITY_PUBLIC);
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(context).setContentText(text).setContentTitle(title).setSmallIcon(R.drawable.ic_action_name);
+        resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
+        //resultIntent.putExtra("task", "a");
+        //Log.e("Test 0",resultIntent.getStringExtra("task"));
+        //TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        //stackBuilder.addParentStack(WhatsappAutoSelectActivity.class);
 
+// Adds the Intent that starts the Activity to the top of the stack
+        //stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, 0);
+        noti.setContentIntent(resultPendingIntent);
 
-        // Gets an instance of the NotificationManager service//
+        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");
+// Sets a title for the Inbox in expanded layout
+// Moves events into the expanded layout
 
-        NotificationManager mNotificationManager =
-
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Log.e("Notification","In Notification");
-        // When you issue multiple notifications about the same type of event,
-        // it’s best practice for your app to try to update an existing notification
-        // with this new information, rather than immediately creating a new notification.
-        // If you want to update this notification at a later date, you need to assign it an ID.
-        // You can then use this ID whenever you issue a subsequent notification.
-        // If the previous notification is still visible, the system will update this existing notification,
-        // rather than create a new one. In this example, the notification’s ID is 001//
-
-        mNotificationManager.notify(001, mBuilder.build());
+        noti.setStyle(inboxStyle);
+        NM.notify(0, noti.build());
     }
 }
