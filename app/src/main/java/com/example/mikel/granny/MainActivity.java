@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 NotificationControl controller = new NotificationControl(MainActivity.this);
-                controller.sendNotification("My notification", "Hello World!");
+                controller.sendNotification("My notification", "Hello World!","this is content");
 //                sendNotification();
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
                 WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
                 try {
-                    wallpaperController.changeWallPaper();
+                    wallpaperController.changeWallPaper(2);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

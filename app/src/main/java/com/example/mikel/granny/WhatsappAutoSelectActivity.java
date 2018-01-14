@@ -17,26 +17,26 @@ public class WhatsappAutoSelectActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // Get intent, action and MIME type
         super.onCreate(savedInstanceState);
-        //Intent intent = getIntent();
+        Intent intent = getIntent();
 //        String action = intent.getAction();
 //        String type = intent.getType();
-        /*String taskType = intent.getStringExtra("task");
-        if(taskType == null){
+        String content = intent.getStringExtra("task");
+        if(content == null){
             Log.e("Test","null"+intent.toString());
         }
-        else if(taskType.equals("a")){
-            onClickWhatsApp();
-        }*/
-        onClickWhatsApp();
+        else{
+            onClickWhatsApp(content);
+        }
+//        onClickWhatsApp("Your text here");
     }
 
-    public void onClickWhatsApp() {
+    public void onClickWhatsApp(String text) {
 
         PackageManager pm=getPackageManager();
         try {
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
-            String text = "YOUR TEXT HERE";
+//            String text = "YOUR TEXT HERE";
 
             PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
             //Check if package exists or not. If not then code

@@ -19,9 +19,20 @@ public class WallpaperController {
     }
 
     @SuppressLint("ResourceType")
-    public void changeWallPaper() throws IOException {
+    public void changeWallPaper(int usecase) throws IOException {
         WallpaperManager wpm = WallpaperManager.getInstance(context);
-        Uri uri = Uri.parse("android.resource://com.example.mikel.granny/drawable/wp");
-        wpm.setResource(R.drawable.wp3);
+//        Uri uri = Uri.parse("android.resource://com.example.mikel.granny/drawable/wp");
+        switch (usecase){
+            case 1:
+                wpm.setResource(R.drawable.wp2);
+                break;
+            case 2:
+                wpm.setResource(R.drawable.wp3);
+                break;
+            case 3:
+                wpm.setResource(R.drawable.wp4);
+                break;
+        }
+
     }
 }
