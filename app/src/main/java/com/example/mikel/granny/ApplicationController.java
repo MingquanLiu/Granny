@@ -173,7 +173,7 @@ public class ApplicationController extends Service {
                 "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
         );
         long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        vibrateController.vibrateForPattern(pattern, 2);
         vibrateController.vibrateForInterval(1500);
     }
 
