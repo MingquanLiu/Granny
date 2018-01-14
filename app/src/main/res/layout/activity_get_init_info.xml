@@ -7,20 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.mikel.granny.MainActivity">
 
-    <EditText
-        android:id="@+id/addressField"
-        android:layout_width="282dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="Where do you live? "
-        android:inputType="textPostalAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/initialize"
         android:layout_width="wrap_content"
@@ -28,7 +14,7 @@
         android:layout_marginBottom="233dp"
         android:layout_marginEnd="66dp"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="180dp"
         android:text="Initialize your virtual granny"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,11 +42,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="9dp"
         android:timePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressField" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView2"
@@ -68,12 +54,38 @@
         android:layout_height="33dp"
         android:layout_marginEnd="54dp"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="26dp"
         android:text="When should you be home? "
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressField" />
+        app:layout_constraintTop_toBottomOf="@+id/homeLong" />
+
+    <EditText
+        android:id="@+id/homeLong"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Home Longtitude"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/homeLat"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/homeLat"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Home Latitude"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

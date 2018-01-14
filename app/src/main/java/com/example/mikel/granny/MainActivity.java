@@ -42,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                startActivity(new Intent(MainActivity.this, NotificationControl.class));
+                NotificationControl controller = new NotificationControl(MainActivity.this);
+                controller.sendNotification("hi", "this is context");
                 startService(new Intent(MainActivity.this, ApplicationController.class));
 //                openWhatsappContact1(number);
 
 
-                VibrateController vibrateController = new VibrateController(getApplicationContext());
-                vibrateController.vibrateForInterval(2000);
+//                VibrateController vibrateController = new VibrateController(getApplicationContext());
+//                vibrateController.vibrateForInterval(2000);
 
                 WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
                 try {
