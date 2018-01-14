@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.mikel.granny.Controller.NotificationControl;
 import com.example.mikel.granny.Controller.VibrateController;
+import com.example.mikel.granny.Controller.WallpaperController;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -166,7 +167,7 @@ public class ApplicationController extends Service {
                 "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
         );
         long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        vibrateController.vibrateForPattern(pattern, 2);
         vibrateController.vibrateForInterval(1500);
     }
 
