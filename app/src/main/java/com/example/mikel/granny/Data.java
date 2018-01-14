@@ -12,6 +12,7 @@ public class Data {
     private String address;
     private LatLon homeLoc;
     private LatLon location;
+    private float speed;
     private int homeHour;
     private int homeMinute;
     private Double loudness;
@@ -24,6 +25,8 @@ public class Data {
     private Data(){
         this.location = new LatLon(0.0, 0.0);
         this.homeLoc = new LatLon(0.0, 0.0);
+        //this.homeLoc = new LatLon(39.0, 116.0);
+        this.speed = 0;
         this.homeMinute = 0;
         this.homeHour = 0;
         this.WIFIName = "";
@@ -91,7 +94,9 @@ public class Data {
         applicationController.infoUpdated();
     }
 
-
+    public void setSpeed(Float speed){
+        this.speed = speed;
+    }
 
 
 

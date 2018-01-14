@@ -33,7 +33,6 @@ public class DataProvider {
 
     public DataProvider(Context context){
         this.context = context;
-        this.context = context;
         uqi = new UQI(context);
         this.currentInfo = Data.getData();
     }
@@ -69,6 +68,8 @@ public class DataProvider {
                          Float bearing = input.getValueByField(Geolocation.BEARING);
                          Log.e("Geolocation","LatLon:"+latLon.toString()+" Speed:"+speed+
                                  " Bearing:"+bearing);
+                         currentInfo.setPosition(latLon);
+                         currentInfo.setSpeed(speed);
                      }
                  });
 //
