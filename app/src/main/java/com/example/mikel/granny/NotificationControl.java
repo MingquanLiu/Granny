@@ -10,6 +10,8 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +52,6 @@ public class NotificationControl {
                     .setChannelId(CHANNEL_ID)
                     .setContentIntent(resultPendingIntent)
                     .build();
-
             // Gets an instance of the NotificationManager service//
 
 //        NotificationManager mNotificationManager =
@@ -65,7 +66,7 @@ public class NotificationControl {
                     .setContentIntent(resultPendingIntent)
                     .build();
         }
-
+        
         NM.notify(001, notification);
 
 //        NotificationCompat.InboxStyle inboxStyle =new NotificationCompat.InboxStyle().addLine("kk").addLine("kkk");

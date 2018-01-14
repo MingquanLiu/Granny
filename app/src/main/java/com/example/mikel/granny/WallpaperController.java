@@ -22,6 +22,6 @@ public class WallpaperController {
     public void changeWallPaper() throws IOException {
         WallpaperManager wpm = WallpaperManager.getInstance(context);
         Uri uri = Uri.parse("android.resource://com.example.mikel.granny/drawable/wp");
-        wpm.setResource(R.drawable.wp);
+        wpm.setResource(R.drawable.wp3);
     }
 }
