@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,58 +49,46 @@ public class ApplicationController extends Service {
         wallpaperController = new WallpaperController(getApplicationContext());
 
         //double d = getTravelInfo(42.2746, 71.8063, "Time Square");
-        Thread t = new Thread(new Calculate(42.2746, -71.8063, "Time Square"));
-        t.start();
+//        Thread t = new Thread(new Calculate());
+//        t.start();
     }
 
     public void infoUpdated(){
-        int hour =  getHour();//current hour
-        int minute = getMinute();//current minute
-        double distance = Math.sqrt((currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude())*(currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude()) +
-                (currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude())*(currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude()));//direct distance to home
-        int minuteAway = (currentInfo.getHomeHour() - hour) * 60 + (currentInfo.getHomeMinute() - minute);//positive if not yet reached the set time
-
-        currentInfo.logData();
-
-        //at home
-        if (distance < 0.001 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
-            if (currentInfo.getNotiStatus(0)) {
-                if (minuteAway > 15 && minuteAway < 360) {
-                    getHomeEarly();
-                } else if (minuteAway < -60) {
-                    getHomePrettyLate();
-                } else if (currentInfo.getBatteryLevel() < 10) {
-                    getHomeLowBattery();
-                } else {
-                    getHomeDefault();
-                }
-            }
-        }//within 1 mile radius
-        else if (distance < 0.015) {
-            if (currentInfo.getNotiStatus(1)){
-                getNearHome();
-            }
-        }//far away from home
-        else{
-            if (currentInfo.getNotiStatus(2)) {
-                if (minuteAway <= 0 && !currentInfo.getConnectionStatus()) {
-                    shouldBeHomeButNot_OnRoad();
-                } else if (minuteAway <= 0) {
-                    shouldBeHomeButNot_OnWifi();
-                }
-            }
-
-            if (currentInfo.getNotiStatus(3)) {
-                if ((currentInfo.getHomeHour() * 60 + currentInfo.getHomeMinute()) - currentInfo.getBatteryLife() > 5) {
-                    if (currentInfo.getIsscreenon()) {
-                        batteryDyingAwayFromHome();
-                    } else {
-                        batteryDyingAwayFromHomeScreenOff();
-                    }
-
-                }
-            }
-        }
+        Thread t = new Thread(new Calculate());
+        t.start();
+//        Log.e("Info Updated","Update info");
+//        int hour =  getHour();//current hour
+//        int minute = getMinute();//current minute
+//        double distance = Math.sqrt((currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude())*(currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude()) +
+//                (currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude())*(currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude()));//direct distance to home
+//        int minuteAway = (currentInfo.getHomeHour() - hour) * 60 + (currentInfo.getHomeMinute() - minute);//positive if not yet reached the set time
+//
+//        //at home
+//        if (distance < 0.001 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
+//            if (minuteAway > 15 && minuteAway < 360){
+//                getHomeEarly();
+//            }else if(minuteAway < -60){
+//                getHomePrettyLate();
+//            }
+//            else if (currentInfo.getBatteryLevel() < 10){
+//                getHomeLowBattery();
+//            }
+//            else{
+//                getHomeDefault();
+//            }
+//        }//within 1 mile radius
+//        else if (distance < 0.015) {
+//            getNearHome();
+//        }//far away from home
+//        else{
+//            if (minuteAway <= 0 && !currentInfo.getConnectionStatus()){
+//                shouldBeHomeButNot_OnRoad();
+//            }else if(minuteAway<=0){
+//                shouldBeHomeButNot_OnWifi();
+//            } else if((currentInfo.getHomeHour() * 60 + currentInfo.getHomeMinute()) - currentInfo.getBatteryLife() > 5){
+//                batteryDyingAwayFromHome("durT");
+//            }
+//        }
     }
 
     public int getHour(){
@@ -114,8 +103,8 @@ public class ApplicationController extends Service {
         notifController.sendNotification(0,
                 "Oops dinner not ready yet...",
                 "You ought to tell me you are coming home this early! The food is just a few minute away from being done...");
-        long[] pattern = {500, 300};
-        vibrateController.vibrateForPattern(pattern, 3);
+        long[] pattern = {500, 300, 500, 300};
+        vibrateController.vibrateForPattern(pattern, 2);
         try{
             wallpaperController.changeWallPaper(3);
         }catch (Exception e){
@@ -165,7 +154,9 @@ public class ApplicationController extends Service {
                 "Oooooo I feel my grandchild nearby... time to heat up the food!\n" +
                         "(Wanna tell Grandma you are near?)", "Ma I am almost home! "
         );
-        long[] pattern = {500, 300};
+
+        long[] pattern = {500, 300, 500, 300};
+
         vibrateController.vibrateForPattern(pattern, 2);
         try{
             wallpaperController.changeWallPaper(6);
@@ -180,7 +171,7 @@ public class ApplicationController extends Service {
                 "You d*** child COME HOME AT ONCE. Even your dad got back!",
                 "Ma sorry I am late... My sincere apology for not being able to tell you earlier. Please eat without me!"
         );
-        long[] pattern = {500, 300};
+        long[] pattern = {500, 300,500, 300};
         vibrateController.vibrateForPattern(pattern, 2);
         vibrateController.vibrateForInterval(1500);
     }
@@ -194,24 +185,39 @@ public class ApplicationController extends Service {
         vibrateController.vibrateForInterval(1500);
     }
 
-    private void batteryDyingAwayFromHome(){
+
+    private void batteryDyingFarAwayFromHome(String durT, String currentAddr){
         notifController.sendNotification(3,
                 "Uh oh your battery can't seem to survive long",
                 "I told you not to play on your phone that much! Now what >:( \n",
-                "Sorry my phone is going to die! I will be back soon tho!"
+                "Sorry my phone is going to die! I will be back in about"+ durT+"tho!\n"+"I am currently at "+currentAddr
+
         );
         vibrateController.vibrateForInterval(3000);
         //text your fam your ETA?
     }
 
-    private void batteryDyingAwayFromHomeScreenOff(){
+
+    private void batteryDyingNotFarFromHome(String durT, String currentAddr){
         notifController.sendNotification(3,
-                "Told you phone batteries are unreliable >:(",
-                "Sigh these kids who live with their phones on them... useless now huh",
-                "Sorry my phone is going to die! I will be back soon tho!"
+                "Uh oh your battery can't seem to survive long",
+                "I told you not to play on your phone that much! Now what >:( \n",
+                "Sorry my phone is going to die! I will be back soon in about"+ durT+"tho!\n"+"I am currently at "+currentAddr
+
         );
         vibrateController.vibrateForInterval(3000);
+        //text your fam your ETA?
     }
+
+//    private void batteryDyingAwayFromHomeScreenOff(String durT, String currentAddr){
+//        notifController.sendNotification(
+//                "Told you phone batteries are unreliable >:(",
+//                "Sigh these kids who live with their phones on them... useless now huh",
+//                "Sorry my phone is going to die! I will be back in about"+ durT+"tho!\n"+"I am currently at "+currentAddr
+//
+//        );
+//        vibrateController.vibrateForInterval(3000);
+//    }
 
     @Override
     public void onDestroy(){
@@ -222,76 +228,146 @@ public class ApplicationController extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-}
 
 
 
-class Calculate implements  Runnable{
-    private double currentlat;
-    private double currentlng;
-    private String destinationAddress;
 
-    public Calculate(double lat, double lng, String dest){
-        currentlat = lat;
-        currentlng = lng;
-        destinationAddress = dest;
-    }
-    public void run(){
-        StringBuilder stringbuilder = new StringBuilder();
-        double estimatetime;
+    class Calculate implements  Runnable{
+        private double currentlat;
+        private double currentlng;
+        private String destinationAddress;
+        //private Data currentInfo;
 
-        try{
-            HttpsURLConnection urlConnection = null;
-            destinationAddress = destinationAddress.replaceAll(" ", "+");
-            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+currentlat+","+currentlng+"&destinations="+destinationAddress+"&key=AIzaSyB9iyYjFvVw4KqOB_c0fOqc2jhibdKQnqo";
+        public Calculate(){
+            currentlat = currentInfo.getLocation().getLatitude();
+            currentlng = currentInfo.getLocation().getLongitude();
+            destinationAddress = currentInfo.getAddress();
+            //currentInfo = currentinfo;
+//        currentlat = lat;
+//        currentlng = lng;
+//        destinationAddress = dest;
+        }
+        public void run(){
+            currentInfo.logData();
+            StringBuilder stringbuilder = new StringBuilder();
+            try{
+                HttpsURLConnection urlConnection = null;
+                destinationAddress = destinationAddress.replaceAll(" ", "+");
+                String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+currentlat+","+currentlng+"&destinations="+destinationAddress+"&key=AIzaSyB9iyYjFvVw4KqOB_c0fOqc2jhibdKQnqo";
 //            HttpPost httppost = new HttpPost(url);
 //            HttpClient client = new DefaultHttpClient();
 //            HttpResponse response;
 
-            URL urlObj = new URL(url);
-            urlConnection = (HttpsURLConnection) urlObj.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(10000 /* milliseconds */ );
-            urlConnection.setConnectTimeout(15000 /* milliseconds */ );
-            urlConnection.setDoOutput(true);
-            urlConnection.connect();
-            InputStreamReader stream = new InputStreamReader(urlConnection.getInputStream());
+                URL urlObj = new URL(url);
+                urlConnection = (HttpsURLConnection) urlObj.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setReadTimeout(10000 /* milliseconds */ );
+                urlConnection.setConnectTimeout(15000 /* milliseconds */ );
+                urlConnection.setDoOutput(true);
+                urlConnection.connect();
+                InputStreamReader stream = new InputStreamReader(urlConnection.getInputStream());
 
 
 
-            Log.e("granny", "Started");
+                Log.e("granny", "Started");
 
 //                response = client.execute(httppost);
 //                HttpEntity entity = response.getEntity();
 
-            int b;
-            while((b = stream.read()) != -1) {
-                stringbuilder.append((char) b);
+                int b;
+                while((b = stream.read()) != -1) {
+                    stringbuilder.append((char) b);
+                }
+                //Log.e("granny", stringbuilder.toString());
+            } catch (MalformedURLException e) {
+                Log.e("Teg", "Error processing Distance Matrix API URL");
+
+
+            } catch ( IOException e){
+
             }
+
             //Log.e("granny", stringbuilder.toString());
-        } catch (MalformedURLException e) {
-            Log.e("Teg", "Error processing Distance Matrix API URL");
+
+            double distV = 0;
+            double durV = 0;
+            String distT = null;
+            String durT = null;
+            String currentaddr = null;
 
 
-        } catch ( IOException e){
+            JSONObject jsonObject;
+            try{
+                jsonObject  = new JSONObject(stringbuilder.toString());
+                //Log.e("Granny lat,lng", "lat"+currentlat+"lng"+currentlng);
+                //Log.e("Granny GOOGLE API", stringbuilder.toString());
+                JSONArray addr = jsonObject.getJSONArray("origin_addresses");
+                currentaddr = addr.getString(0);
+                //Log.e("grannycurrentAddr ", currentaddr);
 
-        }
+                JSONObject rows = jsonObject.getJSONArray("rows").getJSONObject(0);
+                JSONObject elements = rows.getJSONArray("elements").getJSONObject(0);
+                JSONObject distance = elements.getJSONObject("distance");
+                distV = distance.getDouble("value");
+                distT = distance.getString("text");
+                JSONObject duration = elements.getJSONObject("duration");
+                durV = duration.getDouble("value");
+                durT = duration.getString("text");
+            //Log.e("grannyrows: ", elements.toString());
+            Log.e("grannyduration: ", durT+durV+distT+distV);
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
 
-        //Log.e("granny", stringbuilder.toString());
+            Log.e("Granny Current Address: ", currentaddr);
 
-        JSONObject jsonObject;
-        try{
-            jsonObject  = new JSONObject(stringbuilder.toString());
-            JSONObject rows = jsonObject.getJSONArray("rows").getJSONObject(0);
-            JSONObject elements = rows.getJSONArray("elements").getJSONObject(0);
-            JSONObject distance = elements.getJSONObject("distance");
-            double dist = distance.getDouble("value");
-            JSONObject duration = elements.getJSONObject("duration");
-            double dur = duration.getDouble("value");
-            Log.e("grannyrows: ", elements.toString());
-            Log.e("grannyduration: ", "is "+dur);
-        } catch (JSONException e){
-            e.printStackTrace();
+            int hour =  getHour();//current hour
+            int minute = getMinute();//current minute
+//            double distance = Math.sqrt((currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude())*(currentInfo.getHomeLat() - currentInfo.getLocation().getLatitude()) +
+//                    (currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude())*(currentInfo.getHomeLon() - currentInfo.getLocation().getLongitude()));//direct distance to home
+            int minuteAway = (currentInfo.getHomeHour() - hour) * 60 + (currentInfo.getHomeMinute() - minute);//positive if not yet reached the set time
+
+            currentInfo.logData();
+
+            //at home
+            if (distV < 100 && currentInfo.getHomeWifiName().equals(currentInfo.getWIFIName())){
+                if (currentInfo.getNotiStatus(0)) {
+                    if (minuteAway > 15 && minuteAway < 360) {
+                        getHomeEarly();
+                    } else if (minuteAway < -60) {
+                        getHomePrettyLate();
+                    } else if (currentInfo.getBatteryLevel() < 10) {
+                        getHomeLowBattery();
+                    } else {
+                        getHomeDefault();
+                    }
+                }
+            }//within 1 mile radius - 3000 m
+            else if (distV < 3000) {
+                if (currentInfo.getNotiStatus(1)){
+                    getNearHome();
+                }
+            }//far away from home
+            else{
+                if (currentInfo.getNotiStatus(2)) {
+                    if (minuteAway <= 0 && !currentInfo.getConnectionStatus()) {
+                        shouldBeHomeButNot_OnRoad();
+                    } else if (minuteAway <= 0) {
+                        shouldBeHomeButNot_OnWifi();
+                    }
+                }
+                if (currentInfo.getNotiStatus(3)) {
+                    if (durV - (currentInfo.getBatteryLife() - hour * 60 - minute) >= 30) {
+                        batteryDyingNotFarFromHome(durT, currentaddr);
+                    } else if (durV >= (currentInfo.getBatteryLife() - hour * 60 - minute)) {
+                        batteryDyingNotFarFromHome(durT, currentaddr);
+                    }
+                }
+            }
         }
     }
 }
+
+
+
+

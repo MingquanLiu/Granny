@@ -80,7 +80,7 @@ public class NotificationControl {
         int importance = NotificationManager.IMPORTANCE_HIGH;
         resultIntent = new Intent(context, WhatsappAutoSelectActivity.class);
         resultIntent.putExtra("task",whatappText);
-        resultIntent.putExtra("version", version);
+        resultIntent.putExtra("version", version + "");
         PendingIntent resultPendingIntent =  PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification;
         if (android.os.Build.VERSION.SDK_INT >= 26) {

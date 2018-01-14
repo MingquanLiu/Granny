@@ -26,6 +26,7 @@ public class DataProvider {
     private static final long INTERVAL = 1 * 30 * 1000; // 2 minutes
 
     private static int deviceStatusMask = 1+2+4+8+16;
+    int count = 0;
     private Context context;
     private UQI uqi;
     private Data currentInfo;
@@ -42,6 +43,7 @@ public class DataProvider {
         getCurrentLocation();
 //        testLocation();
 //        testCurrentLocation();
+//        geofence(context);
         getLoudnessPeriodically();
         getDeviceStatePeriodically();
     }
@@ -57,20 +59,23 @@ public class DataProvider {
 //                    .getFirst(Geolocation.LAT_LON);
             // Do something with geolocation
 //            Log.d("Location", "" + latLon.getLatitude() + ", " + latLon.getLongitude());
-
+//        int count =0;
         Globals.LocationConfig.useGoogleService = true;
-         uqi.getData(Geolocation.asUpdates(1000, Geolocation.LEVEL_EXACT), Purpose.TEST("test"))
+         uqi.getData(Geolocation.asUpdates(2, Geolocation.LEVEL_BUILDING), Purpose.TEST("test"))
                  .forEach(new Callback<Item>() {
                      @Override
                      protected void onInput(Item input) {
+
+                         count++;
                          LatLon latLon = input.getValueByField(Geolocation.LAT_LON);
                          Float speed = input.getValueByField(Geolocation.SPEED);
                          Float bearing = input.getValueByField(Geolocation.BEARING);
                          Log.e("Geolocation","LatLon:"+latLon.toString()+" Speed:"+speed+
-                                 " Bearing:"+bearing);
+                                 " Bearing:"+bearing+ "count:"+count);
                          currentInfo.setPosition(latLon);
                      }
                  });
+
 //
 //        } catch (PSException e) {
 //            e.printStackTrace();
@@ -139,15 +144,34 @@ public class DataProvider {
 
     public void testCurrentLocation() {
         Globals.LocationConfig.useGoogleService = true;
-        try {
-            LatLon latLon = uqi
-                    .getData(Geolocation.asCurrent(Geolocation.LEVEL_EXACT), Purpose.TEST("test"))
-                    .logOverSocket("location")
-                    .getFirst(Geolocation.LAT_LON);
-            System.out.println(latLon.toString());
-        } catch (PSException e) {
-            e.printStackTrace();
-        }
+        //            LatLon latLon =
+        uqi
+        .getData(Geolocation.asCurrent(Geolocation.LEVEL_EXACT), Purpose.TEST("test")).debug();
+//                    .logOverSocket("location")
+//                    .getFirst(Geolocation.LAT_LON);
+//            System.out.println(latLon.toString());
 
+    }
+
+    private static final double CENTER_LATITUDE = 40;
+    private static final double CENTER_LONGITUDE = -80;
+    private static final double RADIUS = 20.0;
+
+    /**
+     * Monitor location updates and callback when in a circular area.
+     * Make sure the following line is added to AndroidManifest.xml
+     * <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+     */
+    public void geofence(Context context) {
+        new UQI(context)
+                .getData(Geolocation.asUpdates(10*1000, Geolocation.LEVEL_EXACT), Purpose.GAME("notify user"))
+//                .setField("inRegion", GeolocationOperators.inCircle(Geolocation.LAT_LON, CENTER_LATITUDE, CENTER_LONGITUDE, RADIUS))
+                .onChange("inRegion", new Callback<Boolean>() {
+                    @Override
+                    protected void onInput(Boolean inRegion) {
+                        // Do something when enters/leaves region.
+                        Log.e("Geofence", inRegion ? "entering" : "leaving");
+                    }
+                });
     }
 }

@@ -30,36 +30,10 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-//                GoogleNavigationController googleNavigationController = new GoogleNavigationController(getApplicationContext());
-//                googleNavigationController.startNavigation("fuller lab");
-
-//                sendNotification();
                 startService(new Intent(MainActivity.this, ApplicationController.class));
-//                openWhatsappContact1(number);
-
-//                VibrateController vibrateController = new VibrateController(getApplicationContext());
-//                vibrateController.vibrateForInterval(2000);
-
-//                WallpaperController wallpaperController = new WallpaperController(getApplicationContext());
-//                try {
-//                    wallpaperController.changeWallPaper(2);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
-
-//                Intent intent = new Intent(MainActivity.this,WhatsappAutoSelectActivity.class);
-//                intent.putExtra("task"," ");
-//                startActivity(intent);
-
-//                Log.e(tag,"I am here");
-                //dataProvider= new DataProvider(getApplicationContext(), applicationController.currentInfo);
-                //dataProvider.c    reateProviders();
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//                GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
                 imageView.setVisibility(View.VISIBLE);
                 Glide.with(getApplicationContext()).load(R.raw.gramma).into(imageView);
-
             }
         });
     }
